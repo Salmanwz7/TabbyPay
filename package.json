@@ -8,7 +8,7 @@
     "build": "npm run check:tokens && next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "test": "node --test lib/",
+    "test": "node --test \"lib/**/*.test.ts\"",
     "check:tokens": "node scripts/check-tokens.mjs"
   },
   "dependencies": {
