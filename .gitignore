@@ -1,0 +1,21 @@
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+.DS_Store
+.env*
+.vercel
+
+# Proprietary: Tabby Sans is (c) NaN / Luke Prowse, all rights reserved.
+# Reference measurement only - never committed, never served. See NOTES.md C2.
+brand-assets/
+
+# Local build/dev artefacts
+.next-verify/
+*.log
+
+# Another tool's local config — contains absolute paths from this machine
+opencode.json
+
+.vercel

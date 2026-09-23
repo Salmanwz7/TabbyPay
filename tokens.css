@@ -1,0 +1,168 @@
+/* ============================================================================
+   Tabby brand tokens
+   Extracted 13 Sep 2026 from brand.tabby.ai (published values, incl. Pantone)
+   and tabby.ai's shipped design-system CSS (--tui-*, theme `o26`).
+   Both sources agree on every overlapping value — see tabby-brand.md.
+
+   Naming here follows brand.tabby.ai's published names. The product's own
+   internal prefix is --tui-*; the mapping is noted per block.
+   ========================================================================= */
+
+:root {
+
+  /* --- CORE BRAND -------------------------------------------------------
+     "Green for money. Green for go. Green that you can't miss."
+     Core palette is green + black + white, nothing else.                   */
+  --tabby-green:       #6CFF93;  /* Tabby Green · PMS 2270 C · CMYK 73/0/94/0 */
+  --tabby-black:       #000000;
+  --tabby-white:       #FFFFFF;
+
+  /* --- NEUTRALS (= --tui-neutral-*) -------------------------------------
+     Warm-shifted throughout. Note 900 is #1A1919, never #111.             */
+  --tabby-neutral-0:    #FFFFFF;
+  --tabby-neutral-50:   #F5F4F2;  /* page ground on tabby.ai */
+  --tabby-neutral-100:  #EBE7E4;
+  --tabby-neutral-200:  #D6D3D0;
+  --tabby-neutral-300:  #BAB6B3;
+  --tabby-neutral-400:  #8F8B88;
+  --tabby-neutral-500:  #75726F;  /* secondary text */
+  --tabby-neutral-600:  #595754;
+  --tabby-neutral-700:  #3D3B3A;
+  --tabby-neutral-800:  #292826;
+  --tabby-neutral-900:  #1A1919;  /* primary ink */
+  --tabby-neutral-1000: #000000;
+
+  /* --- SECONDARY BRAND COLOURS ------------------------------------------
+     Expanded palette: "when we're on home turf". Each is one step of the
+     functional ramp below. Print refs are a guide; supply Pantone too.     */
+  --tabby-gold:   #EDCC37;  /* PMS 107 C  · CMYK 0/10/100/0  = gold-300   */
+  --tabby-olive:  #ADA95B;  /* PMS 618 C  · CMYK 25/20/75/15 = olive-400  */
+  --tabby-coral:  #E3715D;  /* PMS 2031 C · CMYK 0/70/60/5   = coral-400  */
+  --tabby-pearl:  #DDA2FA;  /* PMS 264 C  · CMYK 23/40/0/0   = purple-300 */
+  --tabby-sky:    #66ABFE;  /* PMS 2171 C · CMYK 70/20/0/0   = blue-400   */
+
+  /* --- DIGITAL PALETTE ---------------------------------------------------
+     Full ramps for product use. Brand name -> internal --tui-* ramp:
+     green->green, gold->yellow, olive->olive,
+     coral->red, purple->pink, blue->blue                                   */
+   /* green */
+   --tabby-green-50: #E9F7EE;
+   --tabby-green-100: #DAF0DF;
+   --tabby-green-200: #BCE3C6;
+   --tabby-green-300: #90D19F;
+   --tabby-green-400: #57C26E;
+   --tabby-green-500: #419454;
+   --tabby-green-600: #316E3E;
+   --tabby-green-700: #1E4D28;
+   --tabby-green-800: #103018;
+   --tabby-green-900: #0D2112;
+ 
+   /* gold */
+   --tabby-gold-50: #FFF4D1;
+   --tabby-gold-100: #FCEDB8;
+   --tabby-gold-200: #F5DD7D;
+   --tabby-gold-300: #EDCC37;
+   --tabby-gold-400: #D1A923;
+   --tabby-gold-500: #AB8A1D;
+   --tabby-gold-600: #755E12;
+   --tabby-gold-700: #52400E;
+   --tabby-gold-800: #332909;
+   --tabby-gold-900: #211B06;
+ 
+   /* olive */
+   --tabby-olive-50: #F5F3E4;
+   --tabby-olive-100: #EDEBD1;
+   --tabby-olive-200: #DBD8B4;
+   --tabby-olive-300: #C7C381;
+   --tabby-olive-400: #ADA95B;
+   --tabby-olive-500: #8C883F;
+   --tabby-olive-600: #666331;
+   --tabby-olive-700: #454421;
+   --tabby-olive-800: #27290A;
+   --tabby-olive-900: #1B1C05;
+ 
+   /* coral */
+   --tabby-coral-50: #FCEEED;
+   --tabby-coral-100: #FFE1DE;
+   --tabby-coral-200: #FFC2BA;
+   --tabby-coral-300: #FC9B8E;
+   --tabby-coral-400: #E3715D;
+   --tabby-coral-500: #D44C3B;
+   --tabby-coral-600: #A13427;
+   --tabby-coral-700: #6E271E;
+   --tabby-coral-800: #4D1A13;
+   --tabby-coral-900: #2E100D;
+ 
+   /* purple */
+   --tabby-purple-50: #FBEDFF;
+   --tabby-purple-100: #F5DEFA;
+   --tabby-purple-200: #EAC6F5;
+   --tabby-purple-300: #DDA2FA;
+   --tabby-purple-400: #C879DB;
+   --tabby-purple-500: #A55AB8;
+   --tabby-purple-600: #803891;
+   --tabby-purple-700: #5C2969;
+   --tabby-purple-800: #3E1847;
+   --tabby-purple-900: #25102B;
+ 
+   /* blue */
+   --tabby-blue-50: #EBF5FF;
+   --tabby-blue-100: #DFECF7;
+   --tabby-blue-200: #BCDCF7;
+   --tabby-blue-300: #8DC5F7;
+   --tabby-blue-400: #66ABFE;
+   --tabby-blue-500: #3A7DCF;
+   --tabby-blue-600: #2E5E99;
+   --tabby-blue-700: #154178;
+   --tabby-blue-800: #0E2C4F;
+   --tabby-blue-900: #0A1D33;
+ 
+  /* Extra brand tint published separately on brand.tabby.ai */
+  --tabby-green-tint-3: #C7FFD6;
+
+  /* --- SEMANTIC (theme `o26`, the post-rebrand mapping) ------------------
+     Verbatim from tabby.ai's .tui-theme-o26-light block.
+     NOTE: the vivid --tabby-green (#6CFF93) is a BRAND colour, not the
+     functional "positive" colour. Positive is green-400/500.              */
+  --tabby-front-primary:      var(--tabby-neutral-900);
+  --tabby-front-secondary:    var(--tabby-neutral-500);
+  --tabby-front-tertiary:     var(--tabby-neutral-300);
+  --tabby-front-positive:     var(--tabby-green-500);
+  --tabby-front-negative:     var(--tabby-coral-500);
+  --tabby-front-warning:      var(--tabby-gold-500);
+  --tabby-front-accent:       var(--tabby-blue-500);
+  --tabby-front-link:         var(--tabby-blue-500);
+
+  --tabby-bg-level-0:         var(--tabby-neutral-50);
+  --tabby-bg-level-1:         var(--tabby-neutral-0);
+  --tabby-bg-control-primary: var(--tabby-neutral-900);
+  --tabby-bg-positive-strong: var(--tabby-green-400);
+  --tabby-bg-negative-strong: var(--tabby-coral-400);
+  --tabby-bg-warning-strong:  var(--tabby-gold-400);
+  --tabby-bg-accent-strong:   var(--tabby-blue-400);
+
+
+  /* --- SPACING -----------------------------------------------------------
+     The only spacing values in the system. Nothing in between, nothing
+     outside. Section padding is --s7 desktop / --s5 mobile; nothing inside
+     a section sits closer than --s4 to anything else.                      */
+  --s1:  8px;
+  --s2: 16px;
+  --s3: 24px;
+  --s4: 40px;
+  --s5: 64px;
+  --s6: 96px;
+  --s7: 160px;
+  --s8: 240px;
+
+  /* --- LAYOUT ------------------------------------------------------------ */
+  --col: 1200px;   /* content column, hard max */
+  --text: 68ch;    /* text measure, always */
+  --radius: 8px;   /* corner radius ceiling */
+
+  /* --- TYPE --------------------------------------------------------------
+     Tabby Sans is proprietary (NaN / Luke Prowse, all rights reserved).
+     Substitute before shipping anything public — see tabby-brand.md.      */
+  --tabby-font-display: "Tabby Sans Display", "Readex Pro", system-ui, sans-serif;
+  --tabby-font-text:    "Tabby Sans Text", "Readex Pro", system-ui, sans-serif;
+}
