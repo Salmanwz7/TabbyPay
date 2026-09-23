@@ -1,0 +1,8 @@
+{
+  "name": "tabby-split-rules-evidence",
+  "private": true,
+  "description": "Desk research for spec §13.1. Kept apart from the site so the site has no scraping dependencies.",
+  "dependencies": {
+    "google-play-scraper": "^10.0.0"
+  }
+}

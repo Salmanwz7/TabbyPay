@@ -56,3 +56,28 @@ offline. Tabby Sans is not in the repo or the bundle.
 Arabic at build time; the toggle rewrites `<html lang dir>` on the client.
 The language choice is remembered in localStorage (try/catch), so an English
 visitor returning sees one Arabic frame before switching. Same as submission 1.
+
+## Evidence (Phase 1)
+
+**E1 — The review numbers are small, and the page will say so.** Run A: 5 of
+30,250 UAE reviews are about not knowing what a card purchase would become.
+Run B: 2 of 3,217 Saudi reviews ask for a Tabby card. Act 1.3 will quote the
+five UAE verbatims with their n and not present the counts as a big number.
+Run B is not used as "Saudis want the card" (see EVIDENCE.md). **Salman to
+confirm at the Act 1 gate.**
+
+**E2 — CORRECTION: "15% credit card penetration" (§2.2) is not used.** It
+traces to pre-2014 research. World Bank 2021: 25.4% of adults. Tabby's Saudi
+GM in 2022: "around 0.3 credit cards per person". If the page needs the point,
+it quotes Tabby's GM, with source.
+
+**E3 — Tweeq.** Tabby owns Tweeq (SAMA-licensed wallet with cards, independent
+entity, acquired Sep 2024). "No Tabby Card in Saudi" still holds. Flagged
+because a judge could raise it; nothing on the page claims otherwise.
+
+**E4 — App Store feed empty for the UAE.** Run A is Google Play only. Stated
+in the sample line on the page.
+
+**E5 — Trustpilot wording to re-check.** Quotes came through a summarising
+reader. The 2 Jul 2025 "manually split" review is confirmed to exist; exact
+wording must be checked on the live page before it is quoted.
