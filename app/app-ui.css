@@ -389,3 +389,60 @@
   border-radius: 5px;
   background: var(--afford-tone, var(--tabby-neutral-900));
 }
+
+/* --- Cap bar · the ONLY progress bar in the product (spec §11.2) ---------- */
+
+.capbar {
+  position: relative;
+  block-size: var(--s1);
+  border-radius: var(--s1);
+  overflow: clip;
+  background: var(--tabby-neutral-200);
+}
+.capbar--large {
+  block-size: var(--s2);
+}
+.capbar__fill,
+.capbar__adding {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  transition:
+    inline-size var(--t-standard) var(--ease-tabby),
+    inset-inline-start var(--t-standard) var(--ease-tabby);
+}
+.capbar__fill {
+  background: var(--tabby-neutral-900);
+}
+/* The purchase being considered: same ink, lighter step. Not colour-only:
+   CapBar always prints the "with this purchase" sentence beside it. */
+.capbar__adding {
+  background: var(--tabby-neutral-400);
+}
+@media (prefers-reduced-motion: reduce) {
+  .capbar__fill,
+  .capbar__adding {
+    transition: none;
+  }
+}
+
+/* --- Settle · a receipt arriving after a tap or a rule change ------------ */
+
+@keyframes settle {
+  from {
+    opacity: 0;
+    translate: 0 var(--s1);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+.settle {
+  animation: settle var(--t-standard) var(--ease-enter) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .settle {
+    animation: none;
+  }
+}

@@ -30,7 +30,7 @@ const walk = (dir) => {
 ROOTS.forEach(walk);
 
 const problems = [];
-const CLASS_ATTR = /className=(?:"([^"]*)"|\{`([^`]*)`\})/g;
+const STRING = /"([^"\n]*)"|`([^`]*)`/g;
 
 for (const file of files) {
   const rel = relative(".", file).replaceAll("\\", "/");
@@ -41,7 +41,9 @@ for (const file of files) {
     const at = `${rel}:${i + 1}`;
 
     if (rel.endsWith(".tsx")) {
-      for (const m of line.matchAll(CLASS_ATTR)) {
+      // Every string literal, not just className="…": classes also live in
+      // ternaries and template literals.
+      for (const m of line.matchAll(STRING)) {
         const classes = (m[1] ?? m[2]).split(/\s+/);
         for (const c of classes) {
           if (/-\[/.test(c)) problems.push(`${at}  arbitrary value: ${c}`);

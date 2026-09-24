@@ -211,4 +211,8 @@
   --lh-tight: 1.25;
   --lh-snug: 1.4;
   --lh-body: 1.6;
+
+  /* Arabic sentence gap, DESIGN-SYSTEM.md §8: ~double word gap after a
+     full stop, set as a trailing margin on the preceding sentence. */
+  --sentence-gap: 0.45em;
 }

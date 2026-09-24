@@ -137,3 +137,38 @@ export function directionKeys(dir: "rtl" | "ltr") {
     back: dir === "rtl" ? "ArrowRight" : "ArrowLeft",
   };
 }
+
+// ---------------------------------------------------------------------------
+// Submission 3 additions: halalas and dates
+// ---------------------------------------------------------------------------
+
+/**
+ * A riyal amount that keeps its halalas only when it has them:
+ * 450 → "450", 112.5 → "112.50". Same bare-figure rule as formatSar.
+ */
+export function formatAmount(n: number, lang: Lang = "ar"): string {
+  const whole = Number.isInteger(n);
+  return new Intl.NumberFormat(LOCALE[lang], {
+    minimumFractionDigits: whole ? 0 : 2,
+    maximumFractionDigits: 2,
+  }).format(n);
+}
+
+/**
+ * Plain `ar-SA` formats dates in the Hijri calendar (islamic-umalqura). Tabby
+ * schedules are Gregorian, so the calendar is forced along with the digits.
+ */
+const DATE_LOCALE: Record<Lang, string> = {
+  ar: "ar-SA-u-ca-gregory-nu-latn",
+  en: "en-GB",
+};
+
+/** "23 Oct" / "23 أكتوبر". Parsed as UTC so no timezone can shift the day. */
+export function formatDay(iso: string, lang: Lang = "ar"): string {
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Intl.DateTimeFormat(DATE_LOCALE[lang], {
+    day: "numeric",
+    month: "short",
+    timeZone: "UTC",
+  }).format(new Date(Date.UTC(y, m - 1, d)));
+}

@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
   output: "export",
   images: { unoptimized: true },
   trailingSlash: true,
+  // evidence/ has its own lockfile; pin the root so Next does not guess.
+  outputFileTracingRoot: process.cwd(),
 
   // Operational rule carried over from submission 2: never run `next build`
   // while `next dev` is up. They share `.next`, and the dev server then serves

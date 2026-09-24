@@ -37,6 +37,11 @@ interface SliderProps {
   maxLabel?: string;
   /** One-line cue. Retires the first time the handle moves. */
   hint?: string;
+  /**
+   * Visually hide the label when a sentence right above the track already
+   * says what the slider is (the hero's rules). It stays the accessible name.
+   */
+  hideLabel?: boolean;
   id?: string;
 }
 
@@ -51,6 +56,7 @@ export default function Slider({
   minLabel,
   maxLabel,
   hint,
+  hideLabel = false,
   id,
 }: SliderProps) {
   const autoId = useId();
@@ -61,7 +67,7 @@ export default function Slider({
 
   return (
     <div className="w-full">
-      <div className="mb-s1 flex items-baseline justify-between gap-s2">
+      <div className={hideLabel ? "sr-only" : "mb-s1 flex items-baseline justify-between gap-s2"}>
         <label htmlFor={inputId} className="text-label font-medium text-ink">
           {label}
         </label>

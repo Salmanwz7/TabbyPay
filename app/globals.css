@@ -64,6 +64,7 @@
   --spacing-s8: var(--s8);
   --spacing-tap: var(--tap);
   --spacing-btn: var(--btn-h);
+  --spacing-sentence: var(--sentence-gap);
 
   --container-col: var(--col);
   --container-measure: var(--text);

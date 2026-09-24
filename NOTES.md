@@ -81,3 +81,67 @@ in the sample line on the page.
 **E5 — Trustpilot wording to re-check.** Quotes came through a summarising
 reader. The 2 Jul 2025 "manually split" review is confirmed to exist; exact
 wording must be checked on the live page before it is quoted.
+
+## Engine (Phase 2)
+
+**P1 — SPEC GAP: purchases under the threshold.** §7 has no branch for a
+purchase under Rule 1 (the pharmacy's SAR 85 under a SAR 300 rule). Added
+`BELOW_THRESHOLD` → STATEMENT → RECEIPT, offering "split it yourself", the
+same shape as OVER_CAP.
+
+**P2 — "Over SAR 300" includes 300.** A purchase exactly at the threshold
+splits. Read as "SAR 300 and up", because "over" in the UI sentence is a
+shorthand and a customer who sets 450 would expect a 450 purchase to split.
+
+**P3 — The cap counts fee-free splits only.** Rule 2 is about auto-split
+(Pay in 4). A fee plan is a separate, explicit yes and does not fill the cap.
+Landing exactly on the cap is allowed; passing it is not. A refunded or
+un-split purchase frees its share of the cap.
+
+**P4 — Check order is the product.** Eligible? → has a cost? → under the
+threshold? → over the cap? → split. The cost check sits before every rule,
+so no slider position can auto-apply a fee plan (tested across the full
+20 × 46 slider grid).
+
+**P5 — A fee plan is offered only at SAR 2,000 and up.** That is the real
+floor of Tabby's Saudi longer plans (licence, 29 Jun 2026). So furniture
+(1,400) has no fee option and electronics (3,200) does. Fact, not mock.
+
+**P6 — Mock purchase for Screen 7.** A SAR 620 salon purchase flagged not
+eligible (the salon is from Reem's persona, §3.4). It is not one of the hero's
+four; the hero uses exactly the spec's four.
+
+**P7 — Illustrative fee: SAR 160 on SAR 3,200 (5%), total 3,360, 6 × 560.**
+Round and labelled on screen as prototype pricing, as agreed. Not an estimate.
+
+**P8 — Payment dates are monthly from the tap date** (23 Sep, 23 Oct, 23 Nov,
+23 Dec), as in the spec's Screen 4. Amounts are computed in halalas; any
+remainder goes on the first payment.
+
+**P9 — Statement close is 30 Sep (mock).** "Change until your statement"
+therefore means until 30 Sep in the prototype.
+
+## Hero (Phase 3)
+
+**H1 — The hero compares, it doesn't accumulate.** Every purchase is evaluated
+against the same SAR 840 month-to-date, so furniture can be compared across
+cap settings. Cumulative spending lives in the phone prototype (Act 2), where
+the ledger is real.
+
+**H2 — Text components are client components.** The spec says "keep
+everything else server-rendered", but every visible string follows the
+language toggle, which lives in client context. So text sections are
+`'use client'`; they are still prerendered into the static HTML (in Arabic),
+so the first paint needs no JS. Same as submissions 1 and 2.
+
+**H3 — Slider ranges.** Threshold SAR 50–1,000 (step 50), so the pharmacy
+purchase can be made to split at the bottom of the range. Cap SAR 500–5,000
+(step 100), so furniture flips at 2,300 and Jarir can be pushed over the cap
+below 1,300.
+
+**H4 — Colour on the outcome words.** Green dot only on "Splits" (green means
+"a plan you know"); gold tag only on "Asks you" (the consent lane); the rest
+plain. Two secondaries maximum is kept: gold here, coral reserved.
+
+**H5 — The receipt settles (240ms) only when the answer changes** (selected
+purchase or its outcome), not on every slider tick. Reduced motion: none.

@@ -114,7 +114,7 @@ export function Statement({
           {setup.map((line, i) => (
             <span
               key={line}
-              className={i < setup.length - 1 ? "me-[0.45em]" : ""}
+              className={i < setup.length - 1 ? "me-sentence" : ""}
             >
               {line}
             </span>
