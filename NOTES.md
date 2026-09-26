@@ -226,3 +226,16 @@ Money tab, Select Get your card, Complete setup and verify your identity."
 Eligibility: 18+, UAE resident, valid national ID, a linked debit/credit
 card, good credit history. Third-party guides mentioning delivery times and
 "Request Card" buttons were not used.
+
+**A6 — The broken-promise phones as real cases (Salman, 27 Sep 2026: "enhance
+the ui and simulate the ui like its real case scenario").** Both phones are
+the same UAE customer paying AED 500, so amounts are in dirhams (Money gained
+a `currency` prop; riyal stays the default). Online: a store checkout in the
+phone's browser, Tabby selected, four quarter-filled circles with amounts and
+dates, "no fees", then "Pay with Tabby" → order placed with the plan they
+already saw. In a shop: a generic card terminal (the tap happens there, so no
+wallet UI is drawn), the phone's lock screen showing nothing about a plan,
+then "Later" walks the manual path in the Tabby app: card activity → the
+purchase → "Split this purchase?" with 4 / 6 / 8 / 10 months and "Free at
+partner stores, or anywhere with Tabby Plus" (both from tabby.ai/en-AE/card).
+The store URL is store.example (reserved, no real merchant).

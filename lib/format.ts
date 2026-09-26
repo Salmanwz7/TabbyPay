@@ -163,6 +163,17 @@ const DATE_LOCALE: Record<Lang, string> = {
   en: "en-GB",
 };
 
+/** "Wednesday 23 September", for a lock screen. */
+export function formatLongDay(iso: string, lang: Lang = "ar"): string {
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Intl.DateTimeFormat(DATE_LOCALE[lang], {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    timeZone: "UTC",
+  }).format(new Date(Date.UTC(y, m - 1, d)));
+}
+
 /** "7 Aug 2026", for dated sources. Same calendar and UTC rules as formatDay. */
 export function formatDate(iso: string, lang: Lang = "ar"): string {
   const [y, m, d] = iso.split("-").map(Number);

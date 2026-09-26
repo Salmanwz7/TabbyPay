@@ -19,9 +19,10 @@ interface PlanScheduleProps {
   reveal?: boolean;
   /** Rows at or after this index are shown struck through (refund). */
   cancelledFrom?: number;
+  currency?: "sar" | "aed";
 }
 
-export default function PlanSchedule({ schedule, reveal = false, cancelledFrom }: PlanScheduleProps) {
+export default function PlanSchedule({ schedule, reveal = false, cancelledFrom, currency }: PlanScheduleProps) {
   const { lang, t } = useLang();
 
   return (
@@ -39,7 +40,7 @@ export default function PlanSchedule({ schedule, reveal = false, cancelledFrom }
             <span className={i === 0 ? "font-semibold" : ""}>
               {i === 0 ? t.today : formatDay(row.date, lang)}
             </span>
-            <Money value={row.amount} />
+            <Money value={row.amount} currency={currency} />
           </li>
         );
       })}

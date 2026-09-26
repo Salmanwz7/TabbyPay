@@ -415,3 +415,142 @@
     padding-inline: 20px;
   }
 }
+
+/* ============================================================================
+   IDEA 2's WHY · the two real-case phones (NOTES.md A6)
+   A merchant checkout in a mobile browser, and a card terminal with the
+   phone's lock screen. Likenesses, not screenshots; no wallet UI.
+   ========================================================================= */
+
+.app-body--plain {
+  padding-block-end: 24px; /* no tab bar on these screens */
+}
+
+/* Mobile browser address bar. */
+.web-bar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-inline: 16px;
+  min-block-size: 36px;
+  border-radius: 12px;
+  background: var(--tabby-neutral-100);
+  color: var(--tabby-neutral-600);
+  font-size: var(--fs-small);
+}
+
+.web-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: var(--fs-body);
+}
+
+/* A payment method row, with a drawn radio. */
+.web-method {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--tabby-neutral-200);
+  border-radius: var(--radius-app-sm);
+}
+.web-method--row {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+.web-method--on {
+  border: 2px solid var(--tabby-neutral-900);
+}
+.web-radio {
+  flex: none;
+  inline-size: 20px;
+  block-size: 20px;
+  border: 2px solid var(--tabby-neutral-400);
+  border-radius: 50%;
+}
+.web-method--on .web-radio {
+  border: 6px solid var(--tabby-neutral-900);
+}
+
+/* Tabby's four-payment timeline: each circle fills by a quarter. */
+.pie4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  text-align: center;
+}
+.pie4__dot {
+  inline-size: 28px;
+  block-size: 28px;
+  margin-inline: auto;
+  border-radius: 50%;
+  background: conic-gradient(var(--tabby-neutral-900) calc(var(--q) * 25%), var(--tabby-neutral-200) 0);
+}
+
+/* The card terminal: a generic POS, drawn flat. */
+.pos {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  inline-size: 100%;
+  max-inline-size: 280px;
+  margin-inline: auto;
+  padding: 14px;
+  border-radius: 24px;
+  background: var(--tabby-neutral-900);
+  color: var(--tabby-neutral-50);
+}
+.pos__screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-block-size: 108px;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--tabby-neutral-50);
+  color: var(--tabby-neutral-900);
+  text-align: center;
+}
+.pos__keys {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+.pos__keys span {
+  block-size: 12px;
+  border-radius: 4px;
+  background: var(--tabby-neutral-700);
+}
+
+/* The phone's lock screen. */
+.lock {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 0 20px 24px;
+  background: var(--tabby-neutral-100);
+  text-align: center;
+}
+.lock .app-status {
+  align-self: stretch;
+  margin-inline: -20px;
+  margin-block-end: 28px;
+}
+.lock__time {
+  font-size: var(--fs-h1);
+  font-weight: 600;
+  line-height: 1;
+}
+/* The lock screen shows the big clock only, as iOS does. */
+.lock .app-status .tnum {
+  visibility: hidden;
+}

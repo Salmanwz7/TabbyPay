@@ -19,12 +19,14 @@ interface MoneyProps {
   className?: string;
   /** The currency word is usually quieter than the figure. */
   unitClassName?: string;
+  /** Riyal by default. Dirham only for the UAE card today (Idea 2's why). */
+  currency?: "sar" | "aed";
 }
 
-export default function Money({ value, className = "", unitClassName = "" }: MoneyProps) {
+export default function Money({ value, className = "", unitClassName = "", currency = "sar" }: MoneyProps) {
   const { lang, t } = useLang();
   const figure = <bdi className="tnum">{formatAmount(value, lang)}</bdi>;
-  const unit = <span className={unitClassName}>{t.currency}</span>;
+  const unit = <span className={unitClassName}>{currency === "aed" ? t.currencyAed : t.currency}</span>;
 
   return (
     <span className={`whitespace-nowrap ${className}`}>

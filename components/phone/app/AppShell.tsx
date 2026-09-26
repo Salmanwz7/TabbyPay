@@ -33,12 +33,7 @@ export default function AppShell({ tab, onTab, children }: AppShellProps) {
 
   return (
     <div className="app">
-      <div className="app-status" aria-hidden="true">
-        <span className="tnum">9:41</span>
-        <span className="app-status__icons">
-          <StatusIcons />
-        </span>
-      </div>
+      <StatusBar />
 
       <div className="app-body">{children}</div>
 
@@ -61,6 +56,18 @@ export default function AppShell({ tab, onTab, children }: AppShellProps) {
           </button>
         ))}
       </nav>
+    </div>
+  );
+}
+
+/** The phone's status bar: time and icons. Decorative. */
+export function StatusBar() {
+  return (
+    <div className="app-status" aria-hidden="true">
+      <span className="tnum">9:41</span>
+      <span className="app-status__icons">
+        <StatusIcons />
+      </span>
     </div>
   );
 }
