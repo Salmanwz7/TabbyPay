@@ -665,6 +665,11 @@
 .wallet .app-card {
   border: 1px solid var(--tabby-neutral-700);
 }
+/* On the dark sheet the button inverts: light pill, ink label. */
+.wallet .app-btn {
+  background: var(--tabby-neutral-0);
+  color: var(--tabby-neutral-900);
+}
 .wallet__status {
   display: flex;
   flex: 1;

@@ -201,16 +201,13 @@ const NEXT: Record<Stage, Stage> = { idle: "wallet", wallet: "paid", paid: "app"
 function CardAtTerminal() {
   const { lang, t } = useLang();
   const [stage, setStageRaw] = useState<Stage>("idle");
-  const lockRef = useRef<HTMLButtonElement>(null);
-  const nextRef = useRef<HTMLButtonElement>(null);
+  const actionRef = useRef<HTMLButtonElement>(null);
   const acted = useRef(false);
 
-  // The side-button press lives on the lock screen, the rest outside. When
-  // one of them unmounts, focus moves to the other.
+  // Every step's button is inside the phone, one per screen. The pressed one
+  // unmounts, so focus moves to the next screen's button.
   useEffect(() => {
-    if (!acted.current) return;
-    if (stage === "idle") lockRef.current?.focus({ preventScroll: true });
-    else if (stage === "wallet") nextRef.current?.focus({ preventScroll: true });
+    if (acted.current) actionRef.current?.focus({ preventScroll: true });
   }, [stage]);
 
   const setStage = (s: Stage) => {
@@ -219,7 +216,7 @@ function CardAtTerminal() {
   };
   const approved = stage !== "idle" && stage !== "wallet";
   const buttonLabel = {
-    idle: null,
+    idle: t.bpSideButton,
     wallet: t.bpTapPhone,
     paid: t.bpOpenApp,
     app: t.bpFindIt,
@@ -227,6 +224,16 @@ function CardAtTerminal() {
   }[stage];
   // Which of the four manual jobs the phone is showing.
   const job = stage === "app" ? 1 : stage === "detail" ? 3 : -1;
+  const action = (
+    <button
+      ref={actionRef}
+      type="button"
+      className={`app-btn mt-auto self-stretch ${stage === "detail" ? "app-btn--quiet" : ""}`}
+      onClick={() => setStage(NEXT[stage])}
+    >
+      {buttonLabel}
+    </button>
+  );
 
   const phone = (
     <Phone>
@@ -238,9 +245,7 @@ function CardAtTerminal() {
               <span className="lock__time tnum" dir="ltr">
                 9:41
               </span>
-              <button ref={lockRef} type="button" className="app-btn mt-auto self-stretch" onClick={() => setStage("wallet")}>
-                {t.bpSideButton}
-              </button>
+              {action}
             </div>
           ) : stage === "wallet" || stage === "paid" ? (
             <div className="wallet">
@@ -263,6 +268,7 @@ function CardAtTerminal() {
                 )}
               </div>
               {stage === "paid" ? <p className="settle settle--late wallet__note">{t.bpLockNothing}</p> : null}
+              {action}
             </div>
           ) : (
             <>
@@ -271,7 +277,7 @@ function CardAtTerminal() {
                 {stage === "app" ? (
                   <>
                     <h4 className="app-title">{t.bpActivity}</h4>
-                    <button type="button" className="app-tile w-full text-start" onClick={() => setStage("detail")}>
+                    <div className="app-tile">
                       <span className="web-row">
                         <span className="font-semibold">{t.bpShop}</span>
                         <Money value={AMOUNT} className="font-semibold" />
@@ -280,7 +286,8 @@ function CardAtTerminal() {
                         <span>{t.today}</span>
                         <span>{t.bpOnStatement}</span>
                       </span>
-                    </button>
+                    </div>
+                    {action}
                   </>
                 ) : (
                   <>
@@ -301,6 +308,7 @@ function CardAtTerminal() {
                     <p className="tag-known self-start">{t.bpPlanSource}</p>
                     <p className="text-body font-semibold">{t.bpEveryTime}</p>
                     <p className="text-body font-semibold">{t.bpOrForget}</p>
+                    {action}
                   </>
                 )}
               </div>
@@ -326,16 +334,6 @@ function CardAtTerminal() {
         ))}
       </ol>
 
-      {buttonLabel ? (
-        <button
-          ref={nextRef}
-          type="button"
-          className={`${stage === "wallet" ? "btn-primary" : "btn-secondary"} w-full`}
-          onClick={() => setStage(NEXT[stage])}
-        >
-          {buttonLabel}
-        </button>
-      ) : null}
     </Row>
   );
 }
