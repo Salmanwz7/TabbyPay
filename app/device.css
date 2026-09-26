@@ -1,0 +1,187 @@
+/* ============================================================================
+   PHONE FRAME  ·  DESIGN-SYSTEM.md §11, lifted from submissions 1 and 2
+
+   Same iPhone 14 Pro geometry so the three entries read as one body of work:
+   390x844 screen, 12px bezel, 70px corner, 126x37 Dynamic Island, 48px depth.
+   The laptop and the device toggle are dropped: this is an app concept.
+
+   Depth is LAMINATED, not shadowed: flat layers from the neutral ramp stacked
+   along Z between a back plate and a front plate.
+
+   THREE RULES THIS FILE EXISTS TO HONOUR
+
+   1. THE FRAME DOES NOT ROTATE. A click is dispatched only when pointerdown
+      and pointerup land on the same element. A surface that moves between the
+      two loses the click silently, and scripted .click() tests still pass.
+   2. NO scale(). A 44px target inside a 0.82 scale is 36px on glass.
+   3. NO box-shadow (banned). Grounding is a blurred flat contact patch.
+
+   Below `sm` the frame is dropped and the screen renders full-bleed: the
+   visitor is already holding a phone.
+   ========================================================================= */
+
+.stage {
+  --screen-w: 390px;
+  --screen-h: 844px;
+  --bezel: 12px;
+  --dev-w: calc(var(--screen-w) + var(--bezel) * 2);
+  --dev-h: calc(var(--screen-h) + var(--bezel) * 2);
+  --dev-d: 48px;
+  --dev-r: 70px;
+  --screen-r: calc(var(--dev-r) - var(--bezel));
+
+  position: relative;
+  display: flex;
+  justify-content: center;
+  perspective: 2400px;
+  perspective-origin: 50% 46%;
+}
+
+.device {
+  position: relative;
+  transform-style: preserve-3d;
+  inline-size: var(--dev-w);
+  block-size: var(--dev-h);
+}
+
+.device__back,
+.device__lamina,
+.device__front {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--dev-r);
+  backface-visibility: hidden;
+  pointer-events: none;
+}
+.device__back {
+  background: var(--tabby-neutral-800);
+  transform: translateZ(calc(var(--dev-d) / -2));
+}
+.device__lamina {
+  background: var(--lam-tone);
+  transform: translateZ(var(--lam-z));
+}
+.device__front {
+  background: var(--tabby-neutral-1000);
+  transform: translateZ(calc(var(--dev-d) / 2));
+}
+
+/* The screen carries the controls, so it is the one surface that never
+   transforms beyond sitting on the front plate. */
+.device__screen {
+  position: absolute;
+  inset: var(--bezel);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  inline-size: var(--screen-w);
+  block-size: var(--screen-h);
+  border-radius: var(--screen-r);
+  overflow: clip;
+  background: var(--tabby-neutral-0);
+  transform: translateZ(calc(var(--dev-d) / 2));
+}
+
+.device__contact {
+  position: absolute;
+  inset-block-end: -34px;
+  left: 50%; /* centred is centred - documented physical exception, §7 */
+  translate: -50% 0;
+  inline-size: 78%;
+  block-size: 46px;
+  border-radius: 50%;
+  background: var(--tabby-neutral-900);
+  opacity: 0.16;
+  filter: blur(26px);
+  transform: translateZ(calc(var(--dev-d) / -2));
+  pointer-events: none;
+}
+
+/* Hardware does not mirror: physical left/right on purpose (§7 exception). */
+.device__island {
+  position: absolute;
+  inset-block-start: calc(var(--bezel) + 11px);
+  left: 50%; /* centred is centred */
+  transform: translateX(-50%) translateZ(calc(var(--dev-d) / 2 + 1px));
+  inline-size: 126px;
+  block-size: 37px;
+  border-radius: 19px;
+  background: var(--tabby-neutral-1000);
+  z-index: 40;
+  pointer-events: none;
+}
+.device__btn {
+  position: absolute;
+  width: 4px;
+  background: var(--tabby-neutral-700);
+  pointer-events: none;
+}
+.device__btn--action {
+  left: -3px; /* a phone does not mirror */
+  top: 168px;
+  height: 30px;
+  border-radius: 2px 0 0 2px;
+}
+.device__btn--vol-up {
+  left: -3px; /* a phone does not mirror */
+  top: 232px;
+  height: 62px;
+  border-radius: 2px 0 0 2px;
+}
+.device__btn--vol-down {
+  left: -3px; /* a phone does not mirror */
+  top: 308px;
+  height: 62px;
+  border-radius: 2px 0 0 2px;
+}
+.device__btn--power {
+  right: -3px; /* a phone does not mirror */
+  top: 262px;
+  height: 92px;
+  border-radius: 0 2px 2px 0;
+}
+
+/* The screen's content area. The top padding clears the Dynamic Island. */
+.screen-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--s2);
+  min-block-size: 0;
+  overflow-y: auto;
+  padding: 62px 20px 24px;
+}
+
+/* --- Below sm: strip the frame, keep the screen --------------------------
+   Done in CSS, not with a second React subtree: two subtrees would mount the
+   app twice with independent state. */
+@media (max-width: 639px) {
+  .stage {
+    perspective: none;
+    display: block;
+  }
+  .device {
+    inline-size: 100%;
+    block-size: auto;
+    transform-style: flat;
+  }
+  .device__back,
+  .device__lamina,
+  .device__front,
+  .device__island,
+  .device__btn,
+  .device__contact {
+    display: none;
+  }
+  .device__screen {
+    position: static;
+    inline-size: 100%;
+    block-size: 620px;
+    border: 1px solid var(--tabby-neutral-200);
+    border-radius: var(--radius);
+    transform: none;
+  }
+  .screen-body {
+    padding: 20px 16px;
+  }
+}

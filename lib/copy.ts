@@ -87,6 +87,50 @@ const ar = {
   capOf: "من",
   capWithThis: "مع هذا الشراء",
   capWouldBe: "بيصير",
+
+  // --- act 1 ---------------------------------------------------------------
+  act1Kicker: "الفصل الأول · وش الخلل اليوم",
+  act1Statement: "أونلاين، تابي يقولك قبل. البطاقة تقولك بعدين.",
+  act1Setup: [
+    "في صفحة الدفع تشوف الدفعات والتواريخ والرسوم قبل ما تأكد.",
+    "ببطاقة تابي في محلات الإمارات اليوم، تدفع أول وتقرر بعدين.",
+  ],
+
+  bpHeading: "جرّب الاثنين",
+  bpHelp: "اضغط «ادفع» في الجوالين.",
+  bpOnlineLabel: "تابي في الدفع أونلاين",
+  bpTerminalLabel: "بطاقة تابي عند مكينة الدفع",
+  bpOnlineStore: "متجر إلكتروني",
+  bpShop: "محل",
+  bpSplitIn4: "قسّمها على 4 مع تابي",
+  bpFees: "الرسوم",
+  bpNoFees: "بدون رسوم",
+  bpPay: "ادفع",
+  bpDone: "تم. تعرف كل شي.",
+  bpSimulation: "محاكاة لجوال عند مكينة الدفع، مو شاشة محفظة.",
+  bpTapToPay: "قرّب جوالك من المكينة",
+  bpBeep: "بيب.",
+  bpApproved: "تمت العملية",
+  bpLater: "بعدين",
+  bpLaterSteps: ["تفتح التطبيق", "تدوّر على العملية", "تقرر تقسّمها ولا لا", "تختار خطة"],
+  bpOrForget: "أو تنسى، وتدفعها كاملة.",
+  bpAgain: "من جديد",
+  bpCaption: "الدفع أونلاين هو براند تابي. المكينة بطاقة ائتمان.",
+
+  evHeading: "وش يقولون العملاء",
+  evLead:
+    "قليل اللي يكتبونها. واللي كتبوها يوصفون نفس الشي: ما عرفوا وش بتسوي البطاقة إلا بعد ما دفعوا.",
+  evUaeOf: "من",
+  evUaeLabel:
+    "مراجعة لتطبيق تابي على Google Play في الإمارات، خلال 12 شهر، توصف هالمشكلة. قريتها وحدة وحدة.",
+  evSaLabel:
+    "مراجعة سعودية تطلب بطاقة تابي. الطلب السعودي ما يبان في المراجعات، والحجة السعودية في الفصل الثالث.",
+  evTranslation: "ترجمة",
+  evNotCard: "عن التقسيم عموماً، مو البطاقة بالذات",
+  evStars: "من 5",
+  evSource: "Google Play · الإمارات",
+  evMethod:
+    "الطريقة: مراجعات تطبيق تابي بالعربي والإنجليزي على Google Play للإمارات، من 23 سبتمبر 2025 إلى 22 سبتمبر 2026، فرزتها بكلمات مفتاحية وبعدين قريتها وحدة وحدة. متجر آبل ما رجّع أي مراجعة للإمارات. المراجعات هي اللي يكلّف الناس نفسهم يكتبونها. الرقم اللي يقيس المشكلة فعلاً هو تواصلات «ليش ما انقسمت؟» مع الدعم، وهذا عند تابي بس.",
 };
 
 export type Copy = typeof ar;
@@ -160,6 +204,49 @@ const en: Copy = {
   capOf: "of",
   capWithThis: "With this purchase",
   capWouldBe: "would be",
+
+  act1Kicker: "Act 1 · What's broken today",
+  act1Statement: "Online, Tabby tells you before. The card tells you after.",
+  act1Setup: [
+    "At checkout you see the payments, the dates and the fees before you confirm.",
+    "With the Tabby Card in a UAE shop today, you pay first and decide later.",
+  ],
+
+  bpHeading: "Try both",
+  bpHelp: "Press Pay on both phones.",
+  bpOnlineLabel: "Tabby at online checkout",
+  bpTerminalLabel: "Tabby Card at a terminal",
+  bpOnlineStore: "Online store",
+  bpShop: "In a shop",
+  bpSplitIn4: "Split in 4 with Tabby",
+  bpFees: "Fees",
+  bpNoFees: "None",
+  bpPay: "Pay",
+  bpDone: "Done. You know everything.",
+  bpSimulation: "Simulation of a phone at a terminal. Not a wallet screen.",
+  bpTapToPay: "Hold your phone near the terminal",
+  bpBeep: "Beep.",
+  bpApproved: "Approved",
+  bpLater: "Later",
+  bpLaterSteps: ["Open the app", "Find the purchase", "Decide whether to split", "Pick a plan"],
+  bpOrForget: "Or forget, and pay in full.",
+  bpAgain: "Again",
+  bpCaption: "Online is Tabby's brand. The terminal is a credit card.",
+
+  evHeading: "What customers say",
+  evLead:
+    "Few people write it down. The ones who do describe the same thing: they didn't know what the card would do until after they paid.",
+  evUaeOf: "of",
+  evUaeLabel:
+    "Tabby app reviews on Google Play in the UAE, over 12 months, describe this problem. I read each one by hand.",
+  evSaLabel:
+    "Saudi reviews ask for a Tabby Card. Saudi demand doesn't show in reviews; the Saudi case is in Act 3.",
+  evTranslation: "Translation",
+  evNotCard: "About splitting in general, not the card specifically",
+  evStars: "of 5",
+  evSource: "Google Play · UAE",
+  evMethod:
+    "Method: Tabby app reviews in Arabic and English on Google Play for the UAE, 23 Sep 2025 to 22 Sep 2026, filtered by keyword and then read one by one. Apple's feed returned no UAE reviews. Reviews are what people bother to write. The number that would size this is \"why wasn't this split?\" support contacts, and only Tabby has it.",
 };
 
 export const copy: Record<Lang, Copy> = { ar, en };

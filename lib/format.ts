@@ -163,6 +163,17 @@ const DATE_LOCALE: Record<Lang, string> = {
   en: "en-GB",
 };
 
+/** "7 Aug 2026", for dated sources. Same calendar and UTC rules as formatDay. */
+export function formatDate(iso: string, lang: Lang = "ar"): string {
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Intl.DateTimeFormat(DATE_LOCALE[lang], {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(Date.UTC(y, m - 1, d)));
+}
+
 /** "23 Oct" / "23 أكتوبر". Parsed as UTC so no timezone can shift the day. */
 export function formatDay(iso: string, lang: Lang = "ar"): string {
   const [y, m, d] = iso.split("-").map(Number);

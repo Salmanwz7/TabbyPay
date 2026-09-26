@@ -145,3 +145,44 @@ plain. Two secondaries maximum is kept: gold here, coral reserved.
 
 **H5 — The receipt settles (240ms) only when the answer changes** (selected
 purchase or its outcome), not on every slider tick. Reduced motion: none.
+
+**H6 — Hero on phones: the answer is pinned under the purchases.** Below `lg`
+the receipt sits under the fold, so a tap showed nothing on screen. A one-line
+result (merchant · outcome word · 4 × amount) now sits under the tiles below
+`lg`. aria-hidden: the receipt stays the one live region. Recommended at the
+hero gate; Salman replied "ok continue" (26 Sep 2026), read as approval of the
+three gate recommendations (pin, headline wording, BELOW_THRESHOLD).
+
+## Act 1 (Phase 4)
+
+**A1 — Broken promise uses SAR 500 (the spec's 4 × 125), generic stores.**
+"Online store" and "In a shop", no merchant names, so no claim about which
+real merchants take Tabby. The terminal phone is labelled a simulation; no
+wallet UI is drawn. "Pay" stands in for the tap.
+
+**A2 — One persistent button per phone (Pay ↔ Again)**, so keyboard focus is
+never dropped when the state flips.
+
+**A3 — "Later" list arrives after --t-reveal (900ms)**, the beep first. Only
+after the visitor's tap; reduced motion shows it at once.
+
+**A4 — Caption avoids "left/right".** In Arabic the online phone is on the
+right, so the spec's "The left side is Tabby's brand…" became "Online is
+Tabby's brand. The terminal is a credit card."
+
+**A5 — Evidence shown at its real size**: 5 of 30,250 (UAE) and 2 of 3,217
+(Saudi), all five UAE verbatims, the non-card one tagged as such. Trustpilot
+quotes are NOT on the page: they were read through a summariser and must be
+re-checked on the live page first (E5). Translations are mine and labelled.
+
+## Salman's direction, 26 Sep 2026 — the in-app card flow (for Act 2)
+
+Salman: show the screens inside the Tabby app. Add a cards section; from there
+the user issues the Tabby Card, sees its settings, and sets up the plan rules.
+
+**Conflict to flag:** spec §6 cuts "Card application and onboarding". Proposed
+resolution (awaiting Salman): no application form, no KYC. One entry point on
+the Tabby home screen ("Card"), one "Get your card" screen, and setting the
+rules is part of getting the card, so rule-setting happens at issuance (the
+adoption metric in §8 becomes the default path). Close's "What I cut" keeps
+KYC and the application itself.

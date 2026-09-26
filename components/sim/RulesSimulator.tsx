@@ -156,6 +156,24 @@ export default function RulesSimulator() {
               .map((p) => `${p.merchant[lang]}: ${t[OUTCOME_WORD[evaluatePurchase(p, rules, MONTH_TO_DATE)]]}`)
               .join(lang === "ar" ? "، " : ", ")}
           </p>
+          {/* Below lg the receipt sits under the fold, so a tap would show
+              nothing. The answer is pinned here as well. Visual only: the
+              receipt below stays the one live region. (NOTES.md H6.) */}
+          <p
+            aria-hidden="true"
+            className="flex flex-wrap items-baseline gap-s1 rounded-tabby bg-paper p-s2 text-body lg:hidden"
+          >
+            <span className="font-semibold">{selected.merchant[lang]}</span>
+            <span className="text-faint">·</span>
+            <span>{t[OUTCOME_WORD[outcome]] as string}</span>
+            {outcome === "MATCHES_RULE" ? (
+              <>
+                <span className="text-faint">·</span>
+                <bdi className="tnum">4 ×</bdi>
+                <Money value={payIn4(selected.amount, TODAY)[1].amount} />
+              </>
+            ) : null}
+          </p>
           {!flipped ? <p className="hint">{t.heroNudge}</p> : null}
         </div>
       </div>

@@ -441,6 +441,11 @@
 .settle {
   animation: settle var(--t-standard) var(--ease-enter) both;
 }
+/* Arrives after the beep: the plan that should have been there is a list of
+   jobs for later (Act 1). Reduced motion drops the delay with the animation. */
+.settle--late {
+  animation-delay: var(--t-reveal);
+}
 @media (prefers-reduced-motion: reduce) {
   .settle {
     animation: none;
