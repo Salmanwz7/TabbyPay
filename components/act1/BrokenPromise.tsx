@@ -200,10 +200,26 @@ const NEXT: Record<Stage, Stage> = { idle: "wallet", wallet: "paid", paid: "app"
 
 function CardAtTerminal() {
   const { lang, t } = useLang();
-  const [stage, setStage] = useState<Stage>("idle");
+  const [stage, setStageRaw] = useState<Stage>("idle");
+  const lockRef = useRef<HTMLButtonElement>(null);
+  const nextRef = useRef<HTMLButtonElement>(null);
+  const acted = useRef(false);
+
+  // The side-button press lives on the lock screen, the rest outside. When
+  // one of them unmounts, focus moves to the other.
+  useEffect(() => {
+    if (!acted.current) return;
+    if (stage === "idle") lockRef.current?.focus({ preventScroll: true });
+    else if (stage === "wallet") nextRef.current?.focus({ preventScroll: true });
+  }, [stage]);
+
+  const setStage = (s: Stage) => {
+    acted.current = true;
+    setStageRaw(s);
+  };
   const approved = stage !== "idle" && stage !== "wallet";
   const buttonLabel = {
-    idle: t.bpSideButton,
+    idle: null,
     wallet: t.bpTapPhone,
     paid: t.bpOpenApp,
     app: t.bpFindIt,
@@ -222,6 +238,9 @@ function CardAtTerminal() {
               <span className="lock__time tnum" dir="ltr">
                 9:41
               </span>
+              <button ref={lockRef} type="button" className="app-btn mt-auto self-stretch" onClick={() => setStage("wallet")}>
+                {t.bpSideButton}
+              </button>
             </div>
           ) : stage === "wallet" || stage === "paid" ? (
             <div className="wallet">
@@ -307,13 +326,16 @@ function CardAtTerminal() {
         ))}
       </ol>
 
-      <button
-        type="button"
-        className={`${stage === "idle" || stage === "wallet" ? "btn-primary" : "btn-secondary"} w-full`}
-        onClick={() => setStage(NEXT[stage])}
-      >
-        {buttonLabel}
-      </button>
+      {buttonLabel ? (
+        <button
+          ref={nextRef}
+          type="button"
+          className={`${stage === "wallet" ? "btn-primary" : "btn-secondary"} w-full`}
+          onClick={() => setStage(NEXT[stage])}
+        >
+          {buttonLabel}
+        </button>
+      ) : null}
     </Row>
   );
 }
