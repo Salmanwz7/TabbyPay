@@ -215,4 +215,11 @@
   /* Arabic sentence gap, DESIGN-SYSTEM.md §8: ~double word gap after a
      full stop, set as a trailing margin on the preceding sentence. */
   --sentence-gap: 0.45em;
+
+  /* --- INSIDE THE PHONE ONLY ------------------------------------------------
+     The Tabby app itself uses far rounder surfaces than the 8px page ceiling
+     (Salman's screenshot of the Saudi app, 26 Sep 2026). The phone mockup
+     matches the app; the page keeps --radius. Brand conflict, NOTES.md R3. */
+  --radius-app: 20px;
+  --radius-app-sm: 14px;
 }

@@ -185,3 +185,233 @@
     padding: 20px 16px;
   }
 }
+
+/* ============================================================================
+   THE TABBY APP, INSIDE THE PHONE  ·  NOTES.md R1-R4
+
+   A simplified likeness of the Saudi Tabby app (Salman's screenshot, 26 Sep
+   2026): white ground, soft neutral tiles, a green promo banner, a floating
+   pill tab bar. Rounder than the page on purpose (--radius-app, R3). No
+   box-shadow anywhere: the tab bar floats on a hairline border.
+   ========================================================================= */
+
+.app {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-block-size: 0;
+  background: var(--tabby-neutral-0);
+  color: var(--tabby-neutral-900);
+}
+
+/* Status bar: time at the start, the island sits between. iOS mirrors it in
+   RTL, so logical flow is correct here. */
+.app-status {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  block-size: 54px;
+  padding-inline: 32px;
+  font-size: var(--fs-label);
+  font-weight: 600;
+}
+.app-status__icons {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.app-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--s2);
+  min-block-size: 0;
+  overflow-y: auto;
+  padding: 8px 16px 112px; /* clears the floating tab bar */
+}
+
+.app-title {
+  font-size: var(--fs-title);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+}
+
+.app-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-block-size: 48px;
+  padding-inline: 16px;
+  border: 1px solid var(--tabby-neutral-200);
+  border-radius: 999px;
+  color: var(--tabby-neutral-600); /* 7:1, headroom over 4.5 */
+  font-size: var(--fs-body);
+}
+
+.app-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  border-radius: var(--radius-app);
+  background: var(--tabby-neutral-50);
+}
+
+.app-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 20px;
+  border-radius: var(--radius-app);
+  background: var(--tabby-green);
+  color: var(--tabby-neutral-900);
+}
+
+/* Pill buttons, as in the app. 44px minimum, 52px for the main action. */
+.app-pill,
+.app-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-block-size: var(--tap);
+  padding-inline: 20px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--tabby-neutral-900);
+  color: var(--tabby-neutral-0);
+  font: inherit;
+  font-size: var(--fs-body);
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color var(--t-micro) var(--ease-tabby);
+}
+.app-btn {
+  inline-size: 100%;
+  min-block-size: var(--btn-h);
+  font-weight: 600;
+}
+.app-btn--quiet {
+  background: var(--tabby-neutral-100);
+  color: var(--tabby-neutral-900);
+}
+.app-pill:active,
+.app-btn:active {
+  background: var(--tabby-neutral-700);
+}
+.app-btn--quiet:active {
+  background: var(--tabby-neutral-200);
+}
+
+.app-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  min-block-size: var(--tap);
+  padding-inline: 4px;
+  border: 0;
+  background: transparent;
+  color: var(--tabby-neutral-900);
+  font: inherit;
+  font-size: var(--fs-label);
+  font-weight: 500;
+}
+[dir="rtl"] .app-back svg {
+  scale: -1 1;
+}
+
+/* The floating tab bar. */
+.app-tabbar {
+  position: absolute;
+  inset-inline: 16px;
+  inset-block-end: 20px;
+  display: flex;
+  gap: 2px;
+  padding: 6px;
+  border: 1px solid var(--tabby-neutral-100);
+  border-radius: 999px;
+  background: var(--tabby-neutral-0);
+}
+.app-tab {
+  position: relative;
+  display: grid;
+  flex: 1;
+  place-items: center;
+  min-block-size: 48px;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--tabby-neutral-900);
+  transition: background-color var(--t-micro) var(--ease-tabby);
+}
+/* The app grey pill, plus an ink edge: the tint alone is 1.2:1 against
+   white, under the 3:1 a state needs (WCAG 1.4.11). */
+.app-tab[aria-current="page"] {
+  border-color: var(--tabby-neutral-900);
+  background: var(--tabby-neutral-100);
+}
+.app-tab__new {
+  position: absolute;
+  inset-block-start: -8px;
+  inset-inline-end: -2px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--tabby-green);
+  color: var(--tabby-neutral-900);
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+}
+
+/* The card, drawn. Illustrative art, not Tabby's card design (NOTES.md R4). */
+.app-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  aspect-ratio: 1.586;
+  padding: 18px;
+  border-radius: var(--radius-app-sm);
+  background: var(--tabby-neutral-900);
+  color: var(--tabby-neutral-0);
+}
+
+.app-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: var(--fs-body);
+  line-height: var(--lh-snug);
+}
+.app-check svg {
+  flex: none;
+  margin-block-start: 2px;
+  color: var(--tabby-neutral-900);
+}
+
+/* The official Saudi Riyal symbol (SAMA, 2025), inline SVG, app only. */
+.app-sar {
+  display: inline-block;
+  inline-size: 0.8em;
+  block-size: 0.9em;
+  vertical-align: -0.08em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-pill,
+  .app-btn,
+  .app-tab {
+    transition: none;
+  }
+}
+
+/* Below sm the frame is gone, so there is no island to clear. */
+@media (max-width: 639px) {
+  .app-status {
+    padding-inline: 20px;
+  }
+}

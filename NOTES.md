@@ -186,3 +186,43 @@ the Tabby home screen ("Card"), one "Get your card" screen, and setting the
 rules is part of getting the card, so rule-setting happens at issuance (the
 adoption metric in §8 becomes the default path). Close's "What I cut" keeps
 KYC and the application itself.
+
+## Tabby Pay reframe (26 Sep 2026)
+
+**R1 — The reframe (Salman).** The audience is Tabby Saudi. The UAE has the
+Tabby Card; Saudi doesn't. The submission is "مشاركة Tabby Pay" with two ideas:
+(1) bring the card to Saudi, shown as the Saudi Tabby app gaining a new Card
+tab and every screen up to an issued card, based on the UAE's own flow;
+(2) Split Rules, ours. Decided with Salman: "Tabby Pay" names the submission,
+the product inside the phone keeps its real name "Tabby Card" (no product
+called Tabby Pay was found); Idea 1 then Idea 2; the card gets a new 5th tab.
+The hero simulator moves into Idea 2. This supersedes spec §6's cut of "card
+application and onboarding" for the app flow only; real KYC and the real
+application stay cut.
+
+**R2 — A phone in the hero.** Spec §11.2 keeps phones out of the hero on
+their own. This one sits beside the title and the two ideas, is inert (the
+working copy is in Idea 1), and is captioned as a simplified likeness.
+
+**R3 — Brand conflict: radius.** DESIGN-SYSTEM caps radius at 8px. The real
+Saudi app (Salman's screenshot) is much rounder. `--radius-app` (20px) and
+`--radius-app-sm` (14px) apply inside the phone only; the page keeps 8px.
+
+**R4 — Riyal symbol and card art.** Inside the phone, amounts will use the
+official Saudi Riyal symbol (SAMA 2025; glyph paths from Wikimedia Commons),
+as the app does. On the page, Money keeps the word. The card is drawn in CSS
+(ink ground, Tabby mark, "Visa" as text, no network logo): illustrative art,
+not Tabby's card design.
+
+**R5 — Saudi-specific lines are tagged "Proposal".** Perks ("anywhere Visa
+is accepted in Saudi", "no card fees"), the adapted eligibility list and the
+banner are UAE facts transposed, labelled as proposals. The identity check
+and the wallet are simulated and labelled; no ID provider is named and no
+wallet UI is drawn.
+
+**R6 — Source for the Idea 1 flow.** tabby.ai/en-AE/card, fetched 26 Sep
+2026: "Download the Tabby app, Sign up for a Tabby account, Navigate to the
+Money tab, Select Get your card, Complete setup and verify your identity."
+Eligibility: 18+, UAE resident, valid national ID, a linked debit/credit
+card, good credit history. Third-party guides mentioning delivery times and
+"Request Card" buttons were not used.

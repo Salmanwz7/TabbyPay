@@ -1,25 +1,26 @@
 "use client";
 
 /**
- * Act 1 · وش الخلل اليوم (spec §12).
+ * Idea 2 · Split Rules (ours).
  *
- * Two sections, not three paragraphs. The first is the statement (1.1) as its
- * heading, the two lines that make it land, then the broken promise (1.2)
- * itself, so the phones never arrive unannounced (submission 2's lesson).
- * The second is the evidence (1.3).
+ * Why first: online, Tabby tells you before; the UAE card tells you after
+ * (the broken-promise phones), then the evidence. Then the rules simulator,
+ * moved here from the hero when the submission became "Tabby Pay"
+ * (NOTES.md R1). The Split Rules phone prototype joins at Gate B.
  */
 
 import { useLang } from "@/lib/LanguageProvider";
 import SectionShell from "@/components/ui/SectionShell";
 import BrokenPromise from "@/components/act1/BrokenPromise";
 import Evidence from "@/components/act1/Evidence";
+import RulesSimulator from "@/components/sim/RulesSimulator";
 
-export default function Act1() {
+export default function Idea2() {
   const { t } = useLang();
 
   return (
     <>
-      <SectionShell kicker={t.act1Kicker} id="act-1">
+      <SectionShell kicker={t.act1Kicker} id="idea-2">
         <h2 className="display max-w-measure text-h3 sm:text-h2 lg:text-h1">{t.act1Statement}</h2>
         <p className="mt-s3 max-w-measure text-lead leading-body text-ink-soft sm:text-lead-lg">
           {t.act1Setup.map((line, i) => (
@@ -35,6 +36,10 @@ export default function Act1() {
 
       <SectionShell>
         <Evidence />
+      </SectionShell>
+
+      <SectionShell>
+        <RulesSimulator />
       </SectionShell>
     </>
   );

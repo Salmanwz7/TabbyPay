@@ -42,9 +42,9 @@ const readexLatin = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "قواعدك · Tabby Split Rules",
+  title: "مشاركة Tabby Pay · تابي إماجن 2026",
   description:
-    "بطاقة تابي بقواعد تحطها أنت: تعرف خطتك قبل ما ترجع الجوال لجيبك. Know your plan before the terminal beeps.",
+    "بطاقة تابي في السعودية، بقواعد تحطها أنت. The Tabby Card in Saudi, on rules you set.",
   icons: { icon: "/tabby-icon.svg" },
 };
 
