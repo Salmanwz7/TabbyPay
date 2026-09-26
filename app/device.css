@@ -492,6 +492,35 @@
   background: conic-gradient(var(--tabby-neutral-900) calc(var(--q) * 25%), var(--tabby-neutral-200) 0);
 }
 
+/* One case per row (BrokenPromise). Narrow: name, terminal, phone, controls.
+   From lg: the phone on one side, the rest centred beside it. */
+.bp-row {
+  display: grid;
+  gap: var(--s4);
+  grid-template-areas: "label" "pos" "phone" "rest";
+}
+.bp-row__label { grid-area: label; }
+.bp-row__pos { grid-area: pos; }
+.bp-row__phone { grid-area: phone; }
+.bp-row__rest { grid-area: rest; }
+@media (min-width: 64rem) {
+  .bp-row {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr auto auto auto 1fr;
+    grid-template-areas: "phone ." "phone label" "phone pos" "phone rest" "phone .";
+    column-gap: var(--s6);
+    row-gap: var(--s3);
+  }
+  /* No terminal: drop its row, so its gap doesn't open up. */
+  .bp-row--nopos {
+    grid-template-rows: 1fr auto auto 1fr;
+    grid-template-areas: "phone ." "phone label" "phone rest" "phone .";
+  }
+  .bp-row__pos .pos {
+    margin-inline: 0;
+  }
+}
+
 /* The card terminal: a handheld POS as on a Saudi counter, drawn flat.
    Hardware: laid out left to right in both languages (dir="ltr" on it). */
 .pos {

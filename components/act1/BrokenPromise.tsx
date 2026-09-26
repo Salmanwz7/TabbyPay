@@ -47,13 +47,9 @@ export default function BrokenPromise() {
 
       {/* Riyal symbol on every drawn screen, as in the app (R4). */}
       <InAppContext value={true}>
-        <div className="grid items-start gap-s5 lg:grid-cols-2">
-          <Side label={t.bpOnlineLabel}>
-            <OnlineCheckout />
-          </Side>
-          <Side label={t.bpTerminalLabel}>
-            <CardAtTerminal />
-          </Side>
+        <div className="flex flex-col gap-s6">
+          <OnlineCheckout />
+          <CardAtTerminal />
         </div>
       </InAppContext>
 
@@ -63,14 +59,21 @@ export default function BrokenPromise() {
   );
 }
 
-function Side({ label, children }: { label: string; children: React.ReactNode }) {
+/**
+ * One case per row: the phone on one side; the name, the terminal and the
+ * controls on the other (.bp-row). On a narrow screen: name, terminal,
+ * phone, controls, top to bottom.
+ */
+function Row({ label, pos, phone, children }: { label: string; pos?: React.ReactNode; phone: React.ReactNode; children?: React.ReactNode }) {
   const id = useId();
   return (
-    <section aria-labelledby={id} className="flex flex-col gap-s3">
-      <p id={id} className="text-body font-semibold sm:text-center">
+    <section aria-labelledby={id} className={`bp-row ${pos ? "" : "bp-row--nopos"}`}>
+      <p id={id} className="bp-row__label text-title font-semibold">
         {label}
       </p>
-      {children}
+      {pos ? <div className="bp-row__pos">{pos}</div> : null}
+      <div className="bp-row__phone">{phone}</div>
+      {children ? <div className="bp-row__rest flex flex-col gap-s3">{children}</div> : null}
     </section>
   );
 }
@@ -96,7 +99,7 @@ function OnlineCheckout() {
     setPaidRaw(v);
   };
 
-  return (
+  const phone = (
     <Phone>
       <div className="app">
         <StatusBar />
@@ -180,6 +183,12 @@ function OnlineCheckout() {
       </div>
     </Phone>
   );
+
+  return (
+    <Row label={t.bpOnlineLabel} phone={phone}>
+      <p className="max-w-measure text-body text-ink-soft">{t.bpOnlineAside}</p>
+    </Row>
+  );
 }
 
 // ---------------------------------------------------------------------------
@@ -203,11 +212,8 @@ function CardAtTerminal() {
   // Which of the four manual jobs the phone is showing.
   const job = stage === "app" ? 1 : stage === "detail" ? 3 : -1;
 
-  return (
-    <>
-      <Terminal approved={approved} waiting={stage === "wallet"} />
-
-      <Phone>
+  const phone = (
+    <Phone>
         <div className="app">
           {stage === "idle" ? (
             <div className="lock">
@@ -283,8 +289,11 @@ function CardAtTerminal() {
           )}
         </div>
       </Phone>
+  );
 
-      <ol className="grid grid-cols-2 gap-s1 sm:grid-cols-4" aria-label={t.bpLater}>
+  return (
+    <Row label={t.bpTerminalLabel} pos={<Terminal approved={approved} waiting={stage === "wallet"} />} phone={phone}>
+      <ol className="grid grid-cols-2 gap-s1" aria-label={t.bpLater}>
         {t.bpLaterSteps.map((step, i) => (
           <li
             key={step}
@@ -305,7 +314,7 @@ function CardAtTerminal() {
       >
         {buttonLabel}
       </button>
-    </>
+    </Row>
   );
 }
 
