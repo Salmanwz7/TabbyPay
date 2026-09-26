@@ -239,3 +239,42 @@ then "Later" walks the manual path in the Tabby app: card activity → the
 purchase → "Split this purchase?" with 4 / 6 / 8 / 10 months and "Free at
 partner stores, or anywhere with Tabby Plus" (both from tabby.ai/en-AE/card).
 The store URL is store.example (reserved, no real merchant).
+
+## Idea 2 · the Split Rules prototype (Gate B)
+
+**B1 — Inside the Tabby app's Card tab.** The prototype runs in the same app
+shell as Idea 1 (the card is already issued there). All eight §5.3 screens and
+the five §5.4 edge cases are driven by `lib/machine.ts`; the list beside the
+phone opens each one, and every scenario is built by replaying real events
+(`openScenario`, tested in `lib/scenarios.test.ts`, RED 6 then GREEN 39/39).
+
+**B2 — Screen 3 is the terminal, not a wallet.** "Tap phone" happens on a
+drawn generic terminal inside the phone view, labelled a simulation. The
+receipt follows 1.4 s after the tap (rules decide at authorisation; the phone
+hears a moment later). The 1.4 s is a prototype pause, not a Tabby timing.
+
+**B3 — The one orchestrated animation** is the receipt's line-by-line resolve
+(`.resolve`, row i delayed i × --t-micro, ≤ 840 ms for six rows). It runs only
+for a receipt that has just arrived after a tap or a choice, never when a
+scenario is opened from the list. Reduced motion: final state at once.
+
+**B4 — "Simulate a refund"** is a quiet button on split receipts, so the
+refund edge case can be reached by hand as well as from the list.
+
+**B5 — Screen 8 sums.** "Due today" is the first payment of each live plan;
+"On your statement" is the total of statement entries. The cap bar counts
+every live Pay-in-4 split, including ones the customer chose (P3), so the
+this-month scenario sits over the cap (4,490 of 2,000) on purpose: a manual
+split is the customer's own yes, and the cap only governs the automatic lane.
+Flag for Salman: if a manual split shouldn't count toward the cap, it's a
+one-line change in `capUsed`.
+
+**B6 — The riyal symbol inside the app.** Money reads an `InAppContext` set by
+the app shell: inside the phone, riyal amounts show the official symbol
+before the figure ("⃁ 450") in both languages, as the Saudi app does; outside
+the phone, the word stays. Positions verified in the DOM (symbol left of the
+figure, back chevron at the start and mirrored in RTL).
+
+**B7 — Heading levels.** Section h2 → phone screen h3 → in-screen groups h4.
+The rules simulator keeps its own h2s from when it was the hero; to revisit
+in the finish pass.

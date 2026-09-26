@@ -81,7 +81,15 @@ export type Entry = {
 
 export type View = "card" | "set_rules" | "this_month";
 
-export type ScenarioId = "over_cap";
+/** The phone's scenario list: screens 4–8 and the §5.4 edge cases. */
+export type ScenarioId =
+  | "receipt"
+  | "over_cap"
+  | "fee_plan"
+  | "not_eligible"
+  | "refund"
+  | "rule_changed"
+  | "this_month";
 
 export type Phase =
   | { tag: "IDLE"; view: View }
@@ -336,13 +344,39 @@ const tapThrough = (purchaseId: string): Event[] => [
   { type: "NOTIFY" },
 ];
 
+const run = (events: Event[], from: State = initialState()) => events.reduce(reducer, from);
+
 function openScenario(id: ScenarioId): State {
   switch (id) {
+    case "receipt":
+      // Screen 4: Jarir, SAR 450, over a SAR 300 rule.
+      return run(tapThrough("jarir"));
     case "over_cap":
       // Screen 5: SAR 1,200 of a 2,000 cap, then the SAR 1,400 furniture.
-      return tapThrough("furniture").reduce(reducer, {
-        ...initialState(),
-        baseMonthToDate: OVER_CAP_MONTH_TO_DATE,
-      });
+      return run(tapThrough("furniture"), { ...initialState(), baseMonthToDate: OVER_CAP_MONTH_TO_DATE });
+    case "fee_plan":
+      // Screen 6: electronics, SAR 3,200. Asks; nothing is recorded yet.
+      return run(tapThrough("electronics"));
+    case "not_eligible":
+      // Screen 7: the salon purchase goes through but can't be split.
+      return run(tapThrough("salon"));
+    case "refund":
+      return run([...tapThrough("jarir"), { type: "REFUND" }]);
+    case "rule_changed":
+      // A purchase, then a higher cap: the new rule applies from now on.
+      return run([
+        ...tapThrough("jarir"),
+        { type: "SET_RULES", rules: { ...DEFAULT_RULES, cap: 2500 } },
+        { type: "SHOW", view: "set_rules" },
+      ]);
+    case "this_month":
+      // Screen 8: one split by rule, one on the statement, one split by you.
+      return run([
+        ...tapThrough("jarir"),
+        ...tapThrough("pharmacy"),
+        ...tapThrough("electronics"),
+        { type: "CHOOSE", choice: "pay_in_4" },
+        { type: "SHOW", view: "this_month" },
+      ]);
   }
 }

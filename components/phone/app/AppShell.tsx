@@ -12,6 +12,7 @@
 
 import type { Tab } from "@/lib/issue";
 import { useLang } from "@/lib/LanguageProvider";
+import { InAppContext } from "@/components/ui/Money";
 
 const TABS: Tab[] = ["home", "shop", "card", "payments", "account"];
 
@@ -35,7 +36,9 @@ export default function AppShell({ tab, onTab, children }: AppShellProps) {
     <div className="app">
       <StatusBar />
 
-      <div className="app-body">{children}</div>
+      <div className="app-body">
+        <InAppContext value={true}>{children}</InAppContext>
+      </div>
 
       <nav className="app-tabbar" aria-label={t.appTabsLabel}>
         {TABS.map((key) => (

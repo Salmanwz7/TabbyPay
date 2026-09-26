@@ -11,8 +11,17 @@
  * - whitespace-nowrap keeps figure and word on one line.
  */
 
+import { createContext, useContext } from "react";
 import { useLang } from "@/lib/LanguageProvider";
 import { formatAmount } from "@/lib/format";
+import Sar from "@/components/phone/app/Sar";
+
+/**
+ * True inside the Tabby app shell. There riyal amounts carry the official
+ * symbol, as the real app does ("⃁ 500"), symbol first in both languages
+ * (NOTES.md R4). Everywhere else on the page the word stays.
+ */
+export const InAppContext = createContext(false);
 
 interface MoneyProps {
   value: number;
@@ -25,7 +34,18 @@ interface MoneyProps {
 
 export default function Money({ value, className = "", unitClassName = "", currency = "sar" }: MoneyProps) {
   const { lang, t } = useLang();
+  const inApp = useContext(InAppContext);
   const figure = <bdi className="tnum">{formatAmount(value, lang)}</bdi>;
+
+  if (inApp && currency === "sar") {
+    return (
+      <span dir="ltr" className={`inline-flex items-baseline gap-s1 whitespace-nowrap ${className}`}>
+        <Sar label={t.currency} />
+        {figure}
+      </span>
+    );
+  }
+
   const unit = <span className={unitClassName}>{currency === "aed" ? t.currencyAed : t.currency}</span>;
 
   return (

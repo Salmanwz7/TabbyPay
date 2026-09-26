@@ -202,7 +202,7 @@ function Ready({ heading }: { heading: React.ReactNode }) {
         {walletNote ? t.readyWalletNote : null}
       </p>
       {/* The handover: Idea 1 ends where Idea 2 begins. */}
-      <a href="#idea-2" className="app-btn mt-auto">
+      <a href="#split-rules" className="app-btn mt-auto">
         {t.readyRules}
       </a>
     </>

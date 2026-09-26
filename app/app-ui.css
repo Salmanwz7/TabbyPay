@@ -451,3 +451,27 @@
     animation: none;
   }
 }
+
+/* --- Resolve · the plan receipt, line by line (spec §5.3 Screen 4) ---------
+   The ONE orchestrated animation in the app flow. Row i waits i × --t-micro,
+   so four rows land in 600ms and six in 840ms: inside --t-reveal. It only
+   runs when a receipt arrives after a tap. Reduced motion: the final state. */
+@keyframes resolve {
+  from {
+    opacity: 0;
+    translate: 0 var(--s1);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+.resolve {
+  animation: resolve var(--t-standard) var(--ease-enter) both;
+  animation-delay: calc(var(--i, 0) * var(--t-micro));
+}
+@media (prefers-reduced-motion: reduce) {
+  .resolve {
+    animation: none;
+  }
+}
