@@ -492,41 +492,164 @@
   background: conic-gradient(var(--tabby-neutral-900) calc(var(--q) * 25%), var(--tabby-neutral-200) 0);
 }
 
-/* The card terminal: a generic POS, drawn flat. */
+/* The card terminal: a handheld POS as on a Saudi counter, drawn flat.
+   Hardware: laid out left to right in both languages (dir="ltr" on it). */
 .pos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  inline-size: 100%;
+  max-inline-size: 260px;
+  margin-inline: auto;
+}
+/* Room above the printer slot for the receipt to come out into. */
+.pos__paper {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  inline-size: 100%;
+  min-block-size: 96px;
+}
+.pos__receipt {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  inline-size: 76%;
+  padding: 10px 12px 14px;
+  background: var(--tabby-neutral-0);
+  border: 1px solid var(--tabby-neutral-200);
+  border-block-end: none;
+  color: var(--tabby-neutral-900);
+  font-size: var(--fs-small);
+  line-height: 1.3;
+}
+.pos__body {
   display: flex;
   flex-direction: column;
   gap: 12px;
   inline-size: 100%;
-  max-inline-size: 280px;
-  margin-inline: auto;
-  padding: 14px;
-  border-radius: 24px;
+  padding: 10px 14px 18px;
+  border-radius: 28px;
   background: var(--tabby-neutral-900);
   color: var(--tabby-neutral-50);
+}
+.pos__slot {
+  align-self: center;
+  inline-size: 80%;
+  block-size: 6px;
+  border-radius: 3px;
+  background: var(--tabby-neutral-1000);
 }
 .pos__screen {
   display: flex;
   flex-direction: column;
+  gap: 6px;
+  min-block-size: 150px;
+  padding: 8px 12px 12px;
+  border-radius: 14px;
+  background: var(--tabby-blue-600); /* white on it: 6.6:1 */
+  color: var(--tabby-neutral-0);
+}
+/* The approval check: green disc, white tick. */
+.pos__main .settle {
+  border-radius: 50%;
+  background: var(--tabby-green-500);
+}
+.pos__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block-end: 4px;
+  border-block-end: 1px solid var(--tabby-blue-400);
+  font-size: var(--fs-caption);
+  font-weight: 600;
+}
+.pos__main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 4px;
-  min-block-size: 108px;
-  padding: 12px;
-  border-radius: 12px;
-  background: var(--tabby-neutral-50);
-  color: var(--tabby-neutral-900);
   text-align: center;
 }
 .pos__keys {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding-inline: 6px;
 }
 .pos__keys span {
-  block-size: 12px;
-  border-radius: 4px;
-  background: var(--tabby-neutral-700);
+  display: grid;
+  place-items: center;
+  block-size: 32px;
+  border-radius: 8px;
+  background: var(--tabby-neutral-0);
+  color: var(--tabby-neutral-900);
+  font-size: var(--fs-small);
+  font-weight: 600;
+}
+.pos__keys .pos__fn--blank {
+  background: none;
+}
+.pos__foot {
+  align-self: center;
+  inline-size: 40%;
+  block-size: 5px;
+  border-radius: 3px;
+  background: var(--tabby-neutral-600);
+}
+.pos__keys .pos__fn--cancel {
+  background: var(--tabby-coral-500);
+  color: var(--tabby-neutral-0);
+}
+.pos__keys .pos__fn--clear {
+  background: var(--tabby-gold-300);
+  color: var(--tabby-neutral-900);
+}
+.pos__keys .pos__fn--ok {
+  background: var(--tabby-green-500);
+  color: var(--tabby-neutral-0);
+}
+
+/* The phone's wallet sheet: a likeness at Salman's request, no Apple marks
+   (NOTES.md A7). Dark ground, the Tabby Card, "Hold near reader", "Done". */
+.wallet {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 0 24px 32px;
+  background: var(--tabby-neutral-1000);
+  color: var(--tabby-neutral-0);
+  text-align: center;
+}
+.wallet .app-status {
+  align-self: stretch;
+  margin-inline: -24px;
+  margin-block-end: 24px;
+}
+.wallet .settle:has(.app-card) {
+  align-self: stretch;
+}
+.wallet .app-card {
+  border: 1px solid var(--tabby-neutral-700);
+}
+.wallet__status {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.wallet__note {
+  padding: 10px 14px;
+  border-radius: var(--radius-app-sm);
+  background: var(--tabby-neutral-800);
+  color: var(--tabby-neutral-100);
+  font-size: var(--fs-body);
 }
 
 /* The phone's lock screen. */

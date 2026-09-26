@@ -3,30 +3,34 @@
 /**
  * Idea 2's why · the broken promise, as two real cases (spec §3.1).
  *
- * The same UAE customer pays AED 500 twice (NOTES.md A6).
+ * The same customer pays 500 riyals twice, with the Tabby Card working the
+ * way it does in the UAE today (NOTES.md A6, A7).
  *
  *   Online: a store's checkout in the phone's browser. Tabby is the payment
  *   method, and the four payments, their dates and "no fees" are on screen
- *   BEFORE "Pay with Tabby". Paying confirms the plan they already saw.
+ *   BEFORE "Pay with Tabby", which sits inside the page, as it does in a
+ *   real checkout.
  *
- *   In a shop: a card terminal and the phone. The tap beeps, the phone's lock
- *   screen says nothing about a plan. "Later" walks the manual path in the
- *   Tabby app: card activity → the purchase → pick a plan (4, 6, 8 or 10
- *   months, from Tabby's UAE card page), every time.
+ *   In a shop: a card terminal and the phone. Double-click, the wallet shows
+ *   the Tabby Card, hold near the reader, "Done", and the terminal prints.
+ *   Not a word about a plan. "Later" walks the manual path in the Tabby app:
+ *   card activity → the purchase → pick a plan (4, 6, 8 or 10 months, from
+ *   Tabby's UAE card page), every time.
  *
- * No wallet UI is drawn: the tap happens off-screen, on the terminal. Nothing
- * moves until the visitor presses a button. Likenesses, labelled as such.
+ * The wallet sheet is a likeness at Salman's request, with no Apple marks
+ * (A7). Nothing moves until the visitor presses a button.
  */
 
-import { useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { payIn4 } from "@/lib/machine";
 import { TODAY } from "@/lib/mock-data";
 import { useLang } from "@/lib/LanguageProvider";
 import { formatDay, formatLongDay } from "@/lib/format";
 import Phone from "@/components/phone/Phone";
 import { StatusBar } from "@/components/phone/app/AppShell";
+import CardVisual from "@/components/phone/app/CardVisual";
 import TabbyMark from "@/components/ui/TabbyMark";
-import Money from "@/components/ui/Money";
+import Money, { InAppContext } from "@/components/ui/Money";
 import PlanSchedule from "@/components/ui/PlanSchedule";
 
 const AMOUNT = 500;
@@ -41,14 +45,17 @@ export default function BrokenPromise() {
         <p className="text-body text-muted">{t.bpHelp}</p>
       </div>
 
-      <div className="grid items-start gap-s5 lg:grid-cols-2">
-        <Side label={t.bpOnlineLabel}>
-          <OnlineCheckout />
-        </Side>
-        <Side label={t.bpTerminalLabel}>
-          <CardAtTerminal />
-        </Side>
-      </div>
+      {/* Riyal symbol on every drawn screen, as in the app (R4). */}
+      <InAppContext value={true}>
+        <div className="grid items-start gap-s5 lg:grid-cols-2">
+          <Side label={t.bpOnlineLabel}>
+            <OnlineCheckout />
+          </Side>
+          <Side label={t.bpTerminalLabel}>
+            <CardAtTerminal />
+          </Side>
+        </div>
+      </InAppContext>
 
       <p className="max-w-measure text-small text-muted">{t.bpUaeNote}</p>
       <p className="headline max-w-measure text-title sm:text-h3">{t.bpCaption}</p>
@@ -68,153 +75,169 @@ function Side({ label, children }: { label: string; children: React.ReactNode })
   );
 }
 
-function Aed({ value, className }: { value: number; className?: string }) {
-  return <Money value={value} currency="aed" className={className} />;
-}
-
 // ---------------------------------------------------------------------------
-// Online: the store's checkout, Tabby selected
+// Online: the store's checkout, Tabby selected, the button inside the page
 // ---------------------------------------------------------------------------
 
 function OnlineCheckout() {
   const { lang, t } = useLang();
-  const [paid, setPaid] = useState(false);
+  const [paid, setPaidRaw] = useState(false);
   const schedule = payIn4(AMOUNT, TODAY);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const acted = useRef(false);
+
+  // The button that was pressed unmounts, so focus goes to the new heading.
+  useEffect(() => {
+    if (acted.current) headingRef.current?.focus({ preventScroll: true });
+  }, [paid]);
+
+  const setPaid = (v: boolean) => {
+    acted.current = true;
+    setPaidRaw(v);
+  };
 
   return (
-    <>
-      <Phone>
-        <div className="app">
-          <StatusBar />
-          <div className="web-bar" aria-hidden="true">
-            <LockGlyph />
-            <span dir="ltr">{t.bpUrl}</span>
-          </div>
+    <Phone>
+      <div className="app">
+        <StatusBar />
+        <div className="web-bar" aria-hidden="true">
+          <LockGlyph />
+          <span dir="ltr">{t.bpUrl}</span>
+        </div>
 
-          <div className="app-body app-body--plain" aria-live="polite">
-            {paid ? (
+        <div className="app-body app-body--plain">
+          {paid ? (
+            <>
               <div className="settle flex flex-col gap-s2">
                 <CheckCircle />
-                <h4 className="app-title">{t.bpConfirmed}</h4>
+                <h4 ref={headingRef} tabIndex={-1} className="app-title">
+                  {t.bpConfirmed}
+                </h4>
                 <p className="text-body text-ink-soft">{t.bpConfirmedSub}</p>
-                <PlanSchedule schedule={schedule} currency="aed" />
+                <PlanSchedule schedule={schedule} />
               </div>
-            ) : (
-              <>
-                <h4 className="app-title">{t.bpCheckout}</h4>
-                <div className="flex flex-col gap-s1 border-b border-rule-soft pb-s2">
-                  <p className="web-row">
-                    <span>{t.bpItem}</span>
-                    <Aed value={AMOUNT} />
-                  </p>
-                  <p className="web-row font-semibold">
-                    <span>{t.bpTotal}</span>
-                    <Aed value={AMOUNT} />
-                  </p>
-                </div>
+              <button type="button" className="app-btn app-btn--quiet mt-auto" onClick={() => setPaid(false)}>
+                {t.bpBackToStore}
+              </button>
+            </>
+          ) : (
+            <>
+              <h4 ref={headingRef} tabIndex={-1} className="app-title">
+                {t.bpCheckout}
+              </h4>
+              <div className="flex flex-col gap-s1 border-b border-rule-soft pb-s2">
+                <p className="web-row">
+                  <span>{t.bpItem}</span>
+                  <Money value={AMOUNT} />
+                </p>
+                <p className="web-row font-semibold">
+                  <span>{t.bpTotal}</span>
+                  <Money value={AMOUNT} />
+                </p>
+              </div>
 
-                <p className="text-label font-semibold">{t.bpPayWith}</p>
-                <div className="web-method" aria-hidden="true">
-                  <div className="flex items-center gap-s1">
-                    <span className="web-radio" />
-                    <span className="text-body">{t.bpMethodCard}</span>
-                  </div>
+              <p className="text-label font-semibold">{t.bpPayWith}</p>
+              <div className="web-method" aria-hidden="true">
+                <div className="flex items-center gap-s1">
+                  <span className="web-radio" />
+                  <span className="text-body">{t.bpMethodCard}</span>
                 </div>
+              </div>
 
-                {/* Everything Tabby promises, before the button. */}
-                <div className="web-method web-method--on">
-                  <div className="flex items-center gap-s1">
-                    <span className="web-radio" aria-hidden="true" />
-                    <TabbyMark size={24} />
-                    <span className="flex flex-col">
-                      <span className="text-body font-semibold">{t.bpMethodTabby}</span>
-                      <span className="text-small text-muted">{t.bpMethodTabbySub}</span>
-                    </span>
-                  </div>
-                  <ol className="pie4">
-                    {schedule.map((row, i) => (
-                      <li key={row.date} className="flex flex-col gap-s1">
-                        <span className="pie4__dot" style={{ ["--q" as string]: i + 1 }} aria-hidden="true" />
-                        <Aed value={row.amount} className="text-small font-semibold" />
-                        <span className="text-caption text-muted">
-                          {i === 0 ? t.today : <bdi className="tnum">{formatDay(row.date, lang)}</bdi>}
-                        </span>
-                      </li>
-                    ))}
-                  </ol>
-                  <p className="web-row text-small">
-                    <span>{t.bpFees}</span>
-                    <span className="font-semibold">{t.bpNoFees}</span>
-                  </p>
+              {/* Everything Tabby promises, before the button. */}
+              <div className="web-method web-method--on">
+                <div className="flex items-center gap-s1">
+                  <span className="web-radio" aria-hidden="true" />
+                  <TabbyMark size={24} />
+                  <span className="flex flex-col">
+                    <span className="text-body font-semibold">{t.bpMethodTabby}</span>
+                    <span className="text-small text-muted">{t.bpMethodTabbySub}</span>
+                  </span>
                 </div>
-              </>
-            )}
-          </div>
+                <ol className="pie4">
+                  {schedule.map((row, i) => (
+                    <li key={row.date} className="flex flex-col items-center gap-s1">
+                      <span className="pie4__dot" style={{ ["--q" as string]: i + 1 }} aria-hidden="true" />
+                      <Money value={row.amount} className="text-small font-semibold" />
+                      <span className="text-caption text-muted">
+                        {i === 0 ? t.today : <bdi className="tnum">{formatDay(row.date, lang)}</bdi>}
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+                <p className="web-row text-small">
+                  <span>{t.bpFees}</span>
+                  <span className="font-semibold">{t.bpNoFees}</span>
+                </p>
+              </div>
+
+              <button type="button" className="app-btn mt-auto" onClick={() => setPaid(true)}>
+                {t.bpPayTabby}
+              </button>
+            </>
+          )}
         </div>
-      </Phone>
-
-      {/* Outside the phone and never unmounted, so focus stays put. */}
-      <button type="button" className={`${paid ? "btn-secondary" : "btn-primary"} w-full`} onClick={() => setPaid((p) => !p)}>
-        {paid ? t.bpAgain : t.bpPayTabby}
-      </button>
-    </>
+      </div>
+    </Phone>
   );
 }
 
 // ---------------------------------------------------------------------------
-// In a shop: the terminal, the lock screen, then the manual path in the app
+// In a shop: the terminal, the phone's wallet, then the manual path in the app
 // ---------------------------------------------------------------------------
 
-type Stage = "idle" | "paid" | "app" | "detail";
-const NEXT: Record<Stage, Stage> = { idle: "paid", paid: "app", app: "detail", detail: "idle" };
+type Stage = "idle" | "wallet" | "paid" | "app" | "detail";
+const NEXT: Record<Stage, Stage> = { idle: "wallet", wallet: "paid", paid: "app", app: "detail", detail: "idle" };
 
 function CardAtTerminal() {
   const { lang, t } = useLang();
   const [stage, setStage] = useState<Stage>("idle");
-  const tapped = stage !== "idle";
-  const buttonLabel = { idle: t.bpTapPhone, paid: t.bpOpenApp, app: t.bpFindIt, detail: t.bpAgain }[stage];
+  const approved = stage !== "idle" && stage !== "wallet";
+  const buttonLabel = {
+    idle: t.bpSideButton,
+    wallet: t.bpTapPhone,
+    paid: t.bpOpenApp,
+    app: t.bpFindIt,
+    detail: t.bpAgain,
+  }[stage];
   // Which of the four manual jobs the phone is showing.
   const job = stage === "app" ? 1 : stage === "detail" ? 3 : -1;
 
   return (
     <>
-      {/* The terminal. The tap happens here, not on a drawn wallet. */}
-      <div className="pos" role="group" aria-label={t.bpTerminal}>
-        <div className="pos__screen" aria-live="polite">
-          {tapped ? (
-            <>
-              <span className="text-title font-bold">✓ {t.bpApproved}</span>
-              <span className="text-lead font-semibold">{t.bpBeep}</span>
-            </>
-          ) : (
-            <>
-              <Aed value={AMOUNT} className="text-title font-bold" />
-              <span className="flex items-center gap-s1 text-small">
-                <Contactless />
-                {t.bpTerminalIdle}
-              </span>
-            </>
-          )}
-        </div>
-        <div className="pos__keys" aria-hidden="true">
-          {Array.from({ length: 9 }, (_, i) => (
-            <span key={i} />
-          ))}
-        </div>
-      </div>
+      <Terminal approved={approved} waiting={stage === "wallet"} />
 
       <Phone>
         <div className="app">
-          {stage === "idle" || stage === "paid" ? (
+          {stage === "idle" ? (
             <div className="lock">
               <StatusBar />
               <span className="text-body font-medium">{formatLongDay(TODAY, lang)}</span>
               <span className="lock__time tnum" dir="ltr">
                 9:41
               </span>
-              {stage === "paid" ? (
-                <p className="settle mt-s4 rounded-tabby bg-card p-s2 text-body text-ink-soft">{t.bpLockNothing}</p>
-              ) : null}
+            </div>
+          ) : stage === "wallet" || stage === "paid" ? (
+            <div className="wallet">
+              <StatusBar />
+              <div className="settle">
+                <CardVisual issued />
+              </div>
+              <p className="text-body font-semibold">{t.bpWalletCard}</p>
+              <div className="wallet__status" aria-live="polite">
+                {stage === "paid" ? (
+                  <>
+                    <DoneCircle />
+                    <span className="text-title font-semibold">{t.bpWalletDone}</span>
+                  </>
+                ) : (
+                  <>
+                    <PhoneNfc />
+                    <span className="text-title font-semibold">{t.bpWalletHold}</span>
+                  </>
+                )}
+              </div>
+              {stage === "paid" ? <p className="settle settle--late wallet__note">{t.bpLockNothing}</p> : null}
             </div>
           ) : (
             <>
@@ -226,7 +249,7 @@ function CardAtTerminal() {
                     <button type="button" className="app-tile w-full text-start" onClick={() => setStage("detail")}>
                       <span className="web-row">
                         <span className="font-semibold">{t.bpShop}</span>
-                        <Aed value={AMOUNT} className="font-semibold" />
+                        <Money value={AMOUNT} className="font-semibold" />
                       </span>
                       <span className="web-row text-small text-muted">
                         <span>{t.today}</span>
@@ -239,7 +262,7 @@ function CardAtTerminal() {
                     <h4 className="app-title">{t.bpSplitThis}</h4>
                     <p className="web-row">
                       <span>{t.bpShop}</span>
-                      <Aed value={AMOUNT} className="font-semibold" />
+                      <Money value={AMOUNT} className="font-semibold" />
                     </p>
                     <ul className="flex flex-col gap-s1" aria-hidden="true">
                       {t.bpPlanOptions.map((o) => (
@@ -277,12 +300,82 @@ function CardAtTerminal() {
 
       <button
         type="button"
-        className={`${stage === "idle" ? "btn-primary" : "btn-secondary"} w-full`}
+        className={`${stage === "idle" || stage === "wallet" ? "btn-primary" : "btn-secondary"} w-full`}
         onClick={() => setStage(NEXT[stage])}
       >
         {buttonLabel}
       </button>
     </>
+  );
+}
+
+// Three digits, then the function key for that row, as on a real terminal.
+const KEYS = ["1", "2", "3", "✕", "4", "5", "6", "‹", "7", "8", "9", "○", "*", "0", "#", " "];
+const FN: Record<string, string> = {
+  "✕": "pos__fn--cancel",
+  "‹": "pos__fn--clear",
+  "○": "pos__fn--ok",
+  " ": "pos__fn--blank",
+};
+
+/**
+ * A handheld card terminal, the kind on a Saudi shop counter: printer slot,
+ * screen, keypad, the three coloured function keys. Hardware, so it doesn't
+ * mirror in Arabic; only the text on its screen and receipt follows the page.
+ */
+function Terminal({ approved, waiting }: { approved: boolean; waiting: boolean }) {
+  const { lang, t } = useLang();
+  const textDir = lang === "ar" ? "rtl" : "ltr";
+
+  return (
+    <div className="pos" dir="ltr" role="group" aria-label={t.bpTerminal}>
+      {/* The receipt prints once the payment is approved. */}
+      <div className="pos__paper" aria-hidden="true">
+        {approved ? (
+          <div className="pos__receipt print" dir={textDir}>
+            <span className="font-semibold">{t.bpReceipt}</span>
+            <span className="web-row">
+              <span>{t.bpShop}</span>
+              <Money value={AMOUNT} />
+            </span>
+            <span>✓ {t.bpApproved}</span>
+          </div>
+        ) : null}
+      </div>
+      <div className="pos__body">
+        <div className="pos__slot" aria-hidden="true" />
+        <div className="pos__screen" dir={textDir} aria-live="polite">
+          <span className="pos__bar">
+            <span>{t.bpShop}</span>
+            <Contactless />
+          </span>
+          {approved ? (
+            <span className="pos__main">
+              <DoneCircle />
+              <span className="text-title font-bold">{t.bpApproved}</span>
+              <span className="text-small">{t.bpBeep}</span>
+            </span>
+          ) : (
+            <span className="pos__main">
+              <span className="text-small">{t.bpPosAmount}</span>
+              <Money value={AMOUNT} className="text-h3 font-bold" />
+              <span className={`flex items-center gap-s1 text-small ${waiting ? "pulse" : ""}`}>
+                <Contactless />
+                {t.bpTerminalIdle}
+              </span>
+            </span>
+          )}
+        </div>
+        <div className="pos__keys" aria-hidden="true">
+          {KEYS.map((k) => (
+            <span key={k} className={FN[k] ?? ""}>
+              {k === " " ? null : k}
+            </span>
+          ))}
+        </div>
+        <div className="pos__foot" aria-hidden="true" />
+      </div>
+    </div>
   );
 }
 
@@ -302,6 +395,25 @@ function CheckCircle() {
     <svg width="48" height="48" viewBox="0 0 48 48" aria-hidden="true">
       <circle cx="24" cy="24" r="24" fill="var(--tabby-green)" />
       <path d="m14 24.5 7 7 13-14" fill="none" stroke="var(--tabby-neutral-900)" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function DoneCircle() {
+  return (
+    <svg width="44" height="44" viewBox="0 0 48 48" aria-hidden="true" className="settle">
+      <circle cx="24" cy="24" r="22" fill="none" stroke="currentColor" strokeWidth="3" />
+      <path d="m15 24.5 6 6 12-13" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+/** A phone with waves: "hold near the reader". */
+function PhoneNfc() {
+  return (
+    <svg width="56" height="56" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true" className="pulse">
+      <rect x="8" y="10" width="18" height="30" rx="4" />
+      <path d="M32 18a8 8 0 0 1 0 12M37 14a14 14 0 0 1 0 20" />
     </svg>
   );
 }

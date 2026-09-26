@@ -240,6 +240,28 @@ purchase → "Split this purchase?" with 4 / 6 / 8 / 10 months and "Free at
 partner stores, or anywhere with Tabby Plus" (both from tabby.ai/en-AE/card).
 The store URL is store.example (reserved, no real merchant).
 
+**A7 — Riyals, the pay button in the page, a real terminal and a wallet sheet
+(Salman, 27 Sep 2026: "why did u put dirham we are doing in saudi! Put riyal
+icon … put the ادفع مع تابي inside the phone … simulate a real pos device and
+when paying put the iphone screen like its using apple pay and inside it we
+have the tabby card to pay").**
+- Both phones now show riyals with the symbol (the whole comparison sits in
+  `InAppContext`). The note under them now reads "the Tabby Card as it works
+  in the UAE today, if it came to Saudi unchanged". The dirham option was
+  removed from Money, PlanSchedule and copy.
+- "Pay with Tabby" is inside the checkout page, pinned to the bottom. "Back to
+  the store" resets it. Focus moves to the new heading.
+- The terminal is a handheld POS: printer slot, blue screen, white keys and a
+  function column (red, yellow, green), following a reference image Salman
+  sent. The image itself is not used, at his request. After approval a
+  receipt prints out of the slot (`.print`, clip-path, --t-reveal).
+- **This overrides the spec's "never draw a fake Apple Wallet screen", on
+  Salman's instruction.** Mitigation: a generic dark wallet sheet with the
+  Tabby Card, "Hold near reader" and "Done". No Apple logo, wordmark or
+  Face ID glyph. The note under the phones says it carries no Apple marks.
+- New flow: lock screen → double-click → wallet → hold near → Done + receipt
+  + "Not a word about your plan" → app → purchase → pick a plan.
+
 ## Idea 2 · the Split Rules prototype (Gate B)
 
 **B1 — Inside the Tabby app's Card tab.** The prototype runs in the same app

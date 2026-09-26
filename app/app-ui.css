@@ -475,3 +475,37 @@
     animation: none;
   }
 }
+
+/* --- Print · the terminal's receipt, coming out of the slot ---------------
+   Revealed from the slot upwards once the payment is approved. */
+@keyframes print {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+.print {
+  animation: print var(--t-reveal) var(--ease-enter) both;
+}
+
+/* --- Pulse · the terminal and wallet waiting for the phone ----------------
+   Only while the visitor has the wallet open. */
+@keyframes pulse {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.4;
+  }
+}
+.pulse {
+  animation: pulse var(--t-reveal) ease-in-out infinite alternate;
+}
+@media (prefers-reduced-motion: reduce) {
+  .print,
+  .pulse {
+    animation: none;
+  }
+}
