@@ -367,3 +367,21 @@ skips, no console errors or exceptions, every target at least 44px (bar
 the skip link, hidden until focused). Bidi by paint position (§7): clean,
 apart from Latin multi-word names ("OK Hypermarket", "U.S. Bank"), which
 read left to right as they should.
+
+**F6 — BUG FIX: Idea 1's source line read "26" before the URL in Arabic.**
+«(tabby.ai/en-AE/card، 26 سبتمبر 2026)»: the 26 joined the URL's LTR run
+(UBA W7), the same bug as C6. FSI/PDI around the URL. The audit missed it
+at first (the "(" widened the token's box, and URL + number looked like one
+LTR group); it now trims brackets and treats a token ending in "،" as the
+end of a group, and flags the old build, clean on the new one. A scan of
+every Arabic string (copy, evidence, mock data) found no other Latin run
+followed by a digit.
+
+**F7 — Offline: out/ now works from a server and from file://.** Next writes
+absolute "/_next/" paths, so over file:// the page loaded with no CSS or JS.
+`scripts/relativize.mjs` runs after `next build` and rewrites them relative
+(HTML incl. the inline flight data, the webpack public path, CSS font
+url()s). Verified: `node scripts/serve.mjs` (port 4173) and out/index.html
+opened directly, both languages, 375 and 1440 px, all 55 controls pressed:
+no errors, no failed loads, no request leaves the machine, both Readex faces
+load, and the language toggle works (JS hydrates).
