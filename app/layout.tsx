@@ -18,6 +18,9 @@ const readexArabic = localFont({
   weight: "160 700",
   variable: "--font-ar",
   display: "swap",
+  // No generated fallback face here: it covers every code point, so it would
+  // catch Latin letters and digits before --font-latin ever got them.
+  adjustFontFallback: false,
   declarations: [
     {
       prop: "unicode-range",

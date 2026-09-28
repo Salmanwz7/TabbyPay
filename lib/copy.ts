@@ -311,13 +311,127 @@ const ar = {
   evUaeLabel:
     "مراجعة لتطبيق تابي على Google Play في الإمارات، خلال 12 شهر، توصف هالمشكلة. قريتها وحدة وحدة.",
   evSaLabel:
-    "مراجعة سعودية تطلب بطاقة تابي. الطلب السعودي ما يبان في المراجعات، والحجة السعودية في الفصل الثالث.",
+    "مراجعة سعودية تطلب بطاقة تابي. الطلب السعودي ما يبان في المراجعات، والحجة السعودية تحت «ليش الحين».",
   evTranslation: "ترجمة",
   evNotCard: "عن التقسيم عموماً، مو البطاقة بالذات",
   evStars: "من 5",
   evSource: "Google Play · الإمارات",
   evMethod:
     "الطريقة: مراجعات تطبيق تابي بالعربي والإنجليزي على Google Play للإمارات، من 23 سبتمبر 2025 إلى 22 سبتمبر 2026، فرزتها بكلمات مفتاحية وبعدين قريتها وحدة وحدة. متجر آبل ما رجّع أي مراجعة للإمارات. المراجعات هي اللي يكلّف الناس نفسهم يكتبونها. الرقم اللي يقيس المشكلة فعلاً هو تواصلات «ليش ما انقسمت؟» مع الدعم، وهذا عند تابي بس.",
+
+  // --- who benefits · why now · close (Gate C) -----------------------------
+  benefitsKicker: "مين يفيد",
+  benefitsTitle: "ثلاثة يكسبون من نفس البطاقة.",
+  benefits: [
+    {
+      id: "customer",
+      name: "العميل",
+      lines: [
+        "تابي يوصل معه لأي محل يقبل فيزا، مو بس المتاجر الشريكة.",
+        "ويعرف وش سوّت كل عملية قبل ما يرجّع الجوال في جيبه.",
+        "والحد الشهري هو اللي يحطه، مو خوارزمية.",
+      ],
+    },
+    {
+      id: "merchant",
+      name: "التاجر",
+      lines: [
+        "أي محل يقبل فيزا في المملكة يصير مكان يقدر فيه عميل تابي يقسّم.",
+        "بدون ربط تقني، بدون QR، وبدون أي تغيير عند الكاشير.",
+      ],
+    },
+    {
+      id: "tabby",
+      name: "تابي",
+      lines: [
+        "بطاقة تنطلق في السعودية بوعد واضح بدل وعد محيّر.",
+        "وأتوقع أقل تواصل مع الدعم يسأل «ليش ما انقسمت؟».",
+        "وتصميم إقراض مسؤول تقدر تعرضه على ساما.",
+      ],
+    },
+  ],
+
+  whyKicker: "ليش الحين",
+  whyTitle: "تابي قالت إن البطاقة جاية للسعودية من أربع سنين. الحين عندها الرخصة والتمويل.",
+  whyTabbyHeading: "تابي في السعودية",
+  whyIndustryHeading: "والسوق يتحرك من اليدوي للتلقائي",
+  whyTabby: [
+    {
+      date: "سبتمبر 2022",
+      text: "مدير تابي العام في السعودية: بعد نجاح البطاقة الافتراضية في الإمارات، يبون يجيبونها للسعودية.",
+      source: "عرب نيوز، 10 سبتمبر 2022",
+    },
+    {
+      date: "يونيو 2026",
+      text: "رخصة تمويل استهلاكي: خطط لين 12 شهر على مشتريات من 2,000 إلى 50,000 ريال، بالمرابحة وبدون رسوم تأخير.",
+      source: "أخبار تابي، 29 يونيو 2026",
+    },
+    {
+      date: "سبتمبر 2026",
+      text: "233 مليون دولار بتقييم 6.5 مليار، للتوسع في خدمات مالية أوسع في السعودية والإمارات.",
+      source: "عرب نيوز، سبتمبر 2026",
+    },
+  ],
+  whyIndustry: [
+    {
+      date: "2021",
+      text: "U.S. Bank أطلق ExtendPay: حامل البطاقة ينقل مشترياته لخطة بيده.",
+      source: "بيان U.S. Bank",
+    },
+    {
+      date: "نوفمبر 2025",
+      text: "وبعدها Split Card: كل عملية تنقسم تلقائي على 3 أشهر.",
+      // FSI/PDI around the Latin name, or the "5" joins its run (bidi W7).
+      source: "بيان ⁨U.S. Bank⁩، 5 نوفمبر 2025",
+    },
+  ],
+  whyIndustryNote:
+    "بطاقة تابي في الإمارات اليوم في المرحلة اليدوية. قواعدك خطوة بين الاثنين: تلقائي، بس بقواعد يحطها العميل.",
+
+  lendingTitle: "حد تحطه أنت، وموافقتك قبل أي رسوم.",
+  lendingSetup: [
+    "هذا أسهل تدافع عنه قدام الجهة المنظّمة من «كل شي تلقائي» أو «انسَ وتفاجأ بعدين».",
+    "وهو تصميم تقدر تابي تعرضه على ساما.",
+  ],
+
+  closeKicker: "الختام",
+  cutHeading: "وش شلت، وليش",
+  cuts: [
+    {
+      what: "Apple Pay وفيزا ونقاط البيع والتحقق من الهوية، الحقيقية",
+      why: "هذا نموذج فكرة. كل شي تجريبي ومكتوب إنه تجريبي.",
+    },
+    {
+      what: "تطبيق الخطط اللي فيها رسوم تلقائياً",
+      why: "الموافقة والمرابحة. هذي القاعدة اللي تخلي المنتج نظامي، مو نقص فيه.",
+    },
+    {
+      what: "أكثر من ثلاث قواعد",
+      why: "كل قاعدة زيادة تخلي البطاقة أصعب تتوقعها، وهذي المشكلة اللي نحلها.",
+    },
+    {
+      what: "قواعد حسب الفئة («قسّم البقالة، مو البنزين»)",
+      why: "مغرية، ومرحلة ثانية واضحة. بس تزيد التعقيد قبل ما يثبت الأساس.",
+    },
+  ],
+  testHeading: "وش أختبر أول داخل تابي",
+  tests: [
+    "هل العملاء يحطون قواعد أصلاً.",
+    "وهل الحد اللي يختارونه أقل من الحد اللي تعطيهم تابي.",
+  ],
+  methodHeading: "الطريقة والحدود",
+  methodLead:
+    "مبنية على مراجعات بطاقة تابي في الإمارات، ووثائق منتجات تابي نفسها، وسابقة دولية. البطاقة مو موجودة في السعودية، فهذا تصميم لإطلاقها، مو إصلاح لمنتج سعودي قائم.",
+  limits: [
+    "مو معتمد من ساما. هذي فكرة منتج، مو منتج جاهز للإطلاق، وأي ميزة جديدة للبطاقة في السعودية غالباً تحتاج عدم ممانعة من ساما.",
+    "كل البيانات تجريبية: المشتريات والمتاجر ورقم البطاقة والتواريخ.",
+    "رسوم خطة الـ 6 أشهر (160 ريال على 3,200) للتوضيح بس. تسعير المرابحة في تابي مو منشور.",
+    "الأدلة من الإمارات: مراجعات Google Play هناك. الطلب السعودي ما يبان في المراجعات (2 من 3,217)، والحجة السعودية مبنية على كلام تابي نفسها وتمويلها.",
+    "خطوات الفكرة 1 من صفحة بطاقة تابي في الإمارات (26 سبتمبر 2026)، وكل سطر خاص بالسعودية مقترح.",
+    "شاشة المحفظة ومكينة الدفع مرسومة بدون أي علامات لآبل، ومو شاشات حقيقية.",
+    "تابي تملك Tweeq، محفظة مرخّصة من ساما تصدر بطاقات وتشتغل كجهة مستقلة. «ما فيه بطاقة تابي في السعودية» يظل صحيح.",
+    "الخط Readex Pro بديل عن خط تابي، لأن خطها مو مرخّص لهذا الاستخدام.",
+  ],
 };
 
 export type Copy = typeof ar;
@@ -611,13 +725,126 @@ const en: Copy = {
   evUaeLabel:
     "Tabby app reviews on Google Play in the UAE, over 12 months, describe this problem. I read each one by hand.",
   evSaLabel:
-    "Saudi reviews ask for a Tabby Card. Saudi demand doesn't show in reviews; the Saudi case is in Act 3.",
+    "Saudi reviews ask for a Tabby Card. Saudi demand doesn't show in reviews; the Saudi case is under Why now.",
   evTranslation: "Translation",
   evNotCard: "About splitting in general, not the card specifically",
   evStars: "of 5",
   evSource: "Google Play · UAE",
   evMethod:
     "Method: Tabby app reviews in Arabic and English on Google Play for the UAE, 23 Sep 2025 to 22 Sep 2026, filtered by keyword and then read one by one. Apple's feed returned no UAE reviews. Reviews are what people bother to write. The number that would size this is \"why wasn't this split?\" support contacts, and only Tabby has it.",
+
+  // --- who benefits · why now · close (Gate C) -----------------------------
+  benefitsKicker: "Who benefits",
+  benefitsTitle: "Three sides win from the same card.",
+  benefits: [
+    {
+      id: "customer",
+      name: "The customer",
+      lines: [
+        "Tabby goes with them to any shop that takes Visa, not only partner stores.",
+        "They know what every tap did before the phone is back in their pocket.",
+        "And they set the monthly cap, not an algorithm.",
+      ],
+    },
+    {
+      id: "merchant",
+      name: "The merchant",
+      lines: [
+        "Every Visa-accepting shop in the Kingdom becomes a place a Tabby customer can split.",
+        "No integration, no QR, no change at the till.",
+      ],
+    },
+    {
+      id: "tabby",
+      name: "Tabby",
+      lines: [
+        "A card that launches in Saudi with a clear promise instead of a confusing one.",
+        "And, I'd expect, fewer \"why wasn't this split?\" support contacts.",
+        "And a responsible-lending design it can put in front of SAMA.",
+      ],
+    },
+  ],
+
+  whyKicker: "Why now",
+  whyTitle: "Tabby said the card was coming to Saudi four years ago. Now it has the licence and the funding.",
+  whyTabbyHeading: "Tabby in Saudi",
+  whyIndustryHeading: "And the industry is moving from manual to automatic",
+  whyTabby: [
+    {
+      date: "Sep 2022",
+      text: "Abdulaziz Saja, Tabby's Saudi GM: \"After the successful launch of the Tabby Virtual Card in UAE, we want to bring it to Saudi Arabia.\"",
+      source: "Arab News, 10 Sep 2022",
+    },
+    {
+      date: "Jun 2026",
+      text: "A consumer finance licence: plans up to 12 months on SAR 2,000–50,000 purchases, as Murabaha, with no late fees.",
+      source: "Tabby newsroom, 29 Jun 2026",
+    },
+    {
+      date: "Sep 2026",
+      text: "$233M at a $6.5B valuation, to expand into broader financial services in Saudi Arabia and the UAE.",
+      source: "Arab News, Sep 2026",
+    },
+  ],
+  whyIndustry: [
+    {
+      date: "2021",
+      text: "U.S. Bank launches ExtendPay: cardholders move purchases into a plan by hand.",
+      source: "U.S. Bank press release",
+    },
+    {
+      date: "Nov 2025",
+      text: "Then Split Card: every purchase splits automatically over 3 months.",
+      source: "U.S. Bank press release, 5 Nov 2025",
+    },
+  ],
+  whyIndustryNote:
+    "The Tabby Card in the UAE is at the manual stage today. Split Rules is the step between: automatic, on rules the customer sets.",
+
+  lendingTitle: "A cap you set, and your yes before any fee.",
+  lendingSetup: [
+    "That's easier to defend to a regulator than either auto-everything or forget-and-find-out.",
+    "It's a design Tabby can put in front of SAMA.",
+  ],
+
+  closeKicker: "Close",
+  cutHeading: "What I cut, and why",
+  cuts: [
+    {
+      what: "Real Apple Pay, Visa, POS and identity checks",
+      why: "It's a concept prototype. Everything is mocked and labelled mocked.",
+    },
+    {
+      what: "Auto-applying fee-bearing plans",
+      why: "Consent and Murabaha. It's the rule that makes the product legal, not a limitation.",
+    },
+    {
+      what: "More than three rules",
+      why: "Every extra rule makes the card harder to predict, which is the problem we're solving.",
+    },
+    {
+      what: "Category rules (\"split groceries, not fuel\")",
+      why: "Tempting, and a clear Phase 2. It adds complexity before the core is proven.",
+    },
+  ],
+  testHeading: "What I'd test first inside Tabby",
+  tests: [
+    "Whether customers set rules at all.",
+    "And whether the cap they choose is lower than the limit Tabby gives them.",
+  ],
+  methodHeading: "Method and limitations",
+  methodLead:
+    "Built on UAE card reviews, Tabby's own product documentation, and an international precedent. The card isn't live in Saudi, so this designs its launch rather than fixing an existing Saudi product.",
+  limits: [
+    "Not SAMA-approved. This is a product concept, not an approved or deployable product; a new card feature in Saudi likely needs SAMA non-objection.",
+    "All data is mocked: purchases, stores, card number, dates.",
+    "The 6-month plan fee (SAR 160 on 3,200) is illustrative. Tabby's Murabaha pricing isn't public.",
+    "The evidence is from the UAE: Google Play reviews there. Saudi demand doesn't show in reviews (2 of 3,217); the Saudi case rests on Tabby's own words and its funding.",
+    "Idea 1's steps come from the UAE Tabby Card page (26 Sep 2026); every Saudi-specific line is a proposal.",
+    "The wallet sheet and the terminal are drawn with no Apple marks. They aren't real screens.",
+    "Tabby owns Tweeq, a SAMA-licensed wallet that issues cards and runs as an independent entity. \"No Tabby Card in Saudi\" still holds.",
+    "Readex Pro stands in for Tabby's own typeface, which isn't licensed for this use.",
+  ],
 };
 
 export const copy: Record<Lang, Copy> = { ar, en };

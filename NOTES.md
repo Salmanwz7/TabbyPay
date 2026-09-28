@@ -300,3 +300,38 @@ figure, back chevron at the start and mirrored in RTL).
 **B7 — Heading levels.** Section h2 → phone screen h3 → in-screen groups h4.
 The rules simulator keeps its own h2s from when it was the hero; to revisit
 in the finish pass.
+
+## Who benefits · why now · close (Gate C)
+
+**C1 — Who benefits is a tablist, not a radiogroup.** Three views of one
+card, one visible at a time: tabs, with one tab stop, arrows in the reading
+direction, and Home/End. The copy is spec §1, adapted to two ideas. "Fewer
+support contacts" is worded as my expectation ("I'd expect"), because
+Tabby holds the number and I don't.
+
+**C2 — Why now uses only verified rows from EVIDENCE.md.** 2022 GM statement,
+Jun 2026 licence, Sep 2026 raise, U.S. Bank 2021 → Nov 2025, each with its
+source line under it. The Arabic doesn't transliterate the GM's name (I
+couldn't verify the spelling), so it names the role; the English quotes him
+verbatim. The 15% penetration figure stays off (E2).
+
+**C3 — Responsible lending as a Statement.** Spec §8 argument 3, worded as
+"a design Tabby can put in front of SAMA", with no claim of approval.
+
+**C4 — Close.** The cuts are spec §6 minus "card application and
+onboarding", which Salman's reframe brought back in as Idea 1. The limits
+cover: not SAMA-approved, mocked data, the illustrative fee (P7),
+UAE-sourced evidence (2 of 3,217 Saudi), Idea 1 adapted from the UAE page,
+the wallet and terminal drawn with no Apple marks, Tweeq (E3), and the
+substitute typeface. The Evidence line "the Saudi case is in Act 3" now
+points to "Why now".
+
+**C5 — BUG FIX: Latin text was rendering in Arial.** next/font generated a
+metric-matched fallback for the Arabic face covering U+0–10FFFF. Second in
+the chain, it caught every Latin letter and digit before Readex Latin.
+Fixed with `adjustFontFallback: false` on the Arabic face; verified with
+`document.fonts` (readexLatin now loads) in both languages.
+
+**C6 — Bidi: Latin names before digits are isolated.** «بيان U.S. Bank، 5
+نوفمبر» put the 5 inside the Latin run (UBA W7). FSI/PDI around the name,
+as in the footer.
