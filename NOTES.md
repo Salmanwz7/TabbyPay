@@ -335,3 +335,35 @@ Fixed with `adjustFontFallback: false` on the Arabic face; verified with
 **C6 — Bidi: Latin names before digits are isolated.** «بيان U.S. Bank، 5
 نوفمبر» put the 5 inside the Latin run (UBA W7). FSI/PDI around the name,
 as in the footer.
+
+## Finish pass (28 Sep 2026)
+
+Salman: "do the best and finish and then i will inspect at the end". The
+calls below were mine; each is easy to reverse.
+
+**F1 — B5 decided: a manual split counts toward the cap.** Kept as built. The
+cap is the customer's honest measure of what they owe in Pay in 4; a split
+they choose by hand is still owed. They can still go past it by choosing
+to (it's their yes), and the rules just stop doing it for them.
+
+**F2 — The space reserved above the terminal stays.** Without it the whole
+row jumps down when the receipt prints; a layout jump is worse than 96px of
+calm space.
+
+**F3 — B7 fixed.** The rules simulator had h2s left from when it was the
+hero, so "Your rules" and "Your plan receipt" read as peers of the page's
+sections. It now has its own section h2 ("Try it yourself…"), with its
+inner headings at h3/h4. Outline has no skips (measured).
+
+**F4 — Removed one thing: "Auto-applying fee-bearing plans" from What I cut.**
+The fee-consent point was made three times (the locked rule, the lending
+line, the cut). The spec itself calls it "not a limitation", so it wasn't
+a cut. The cut grid goes to three columns on desktop.
+
+**F5 — Audit, measured in headless Chrome** at 375px and 1440px, both
+languages, before and after pressing all 55 controls with real pointer
+events: no horizontal overflow, no text under AA contrast, no heading
+skips, no console errors or exceptions, every target at least 44px (bar
+the skip link, hidden until focused). Bidi by paint position (§7): clean,
+apart from Latin multi-word names ("OK Hypermarket", "U.S. Bank"), which
+read left to right as they should.

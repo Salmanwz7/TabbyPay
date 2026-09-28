@@ -75,7 +75,7 @@ export default function RulesSimulator() {
       {/* ---------------------------------------------------------------- */}
       <div className="flex flex-col gap-s4 rounded-tabby border border-rule bg-card p-s3 sm:p-s4">
         <div className="flex flex-wrap items-center justify-between gap-s2">
-          <h2 className="text-title font-semibold">{t.rulesHeading}</h2>
+          <h3 className="text-title font-semibold">{t.rulesHeading}</h3>
           <span className="tag-known">{t.prototypeTag}</span>
         </div>
 
@@ -116,7 +116,7 @@ export default function RulesSimulator() {
         <LockedRule t={t} />
 
         <div className="flex flex-col gap-s2 border-t border-rule pt-s3">
-          <h3 className="text-body font-semibold">{t.purchasesHeading}</h3>
+          <h4 className="text-body font-semibold">{t.purchasesHeading}</h4>
           <p className="text-small text-muted">{t.purchasesHelp}</p>
           {/* Single-select, so a radiogroup: one tab stop, arrows move and
               select, and arrows follow the reading direction (§7). */}
@@ -185,9 +185,9 @@ export default function RulesSimulator() {
         aria-labelledby="hero-receipt"
         className="flex flex-col gap-s3 self-start rounded-tabby border border-rule bg-card p-s3 sm:p-s4 lg:sticky lg:top-s3"
       >
-        <h2 id="hero-receipt" className="text-small font-medium text-muted">
+        <h3 id="hero-receipt" className="text-small font-medium text-muted">
           {t.receiptHeading}
-        </h2>
+        </h3>
 
         {/* The live region stays mounted so screen readers hear every update;
             only the inner node is re-keyed, to settle when the answer changes. */}

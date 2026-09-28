@@ -19,7 +19,7 @@ export default function Close() {
           <h2 id="close-cut" className="headline text-h3">
             {t.cutHeading}
           </h2>
-          <ul className="grid gap-s2 sm:grid-cols-2">
+          <ul className="grid gap-s2 lg:grid-cols-3">
             {t.cuts.map((c) => (
               <li key={c.what} className="flex flex-col gap-s1 rounded-tabby border border-rule bg-card p-s3">
                 <span className="text-body font-semibold text-ink">{c.what}</span>

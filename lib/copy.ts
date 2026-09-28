@@ -190,6 +190,7 @@ const ar = {
     "عشان كذا القاعدة الثالثة جزء من المنتج، مو قيد عليه.",
   ],
 
+  simTitle: "جرّبها بنفسك: حرّك القواعد، وشوف وش يصير لكل عملية.",
   rulesHeading: "قواعدك",
   rule1Label: "القاعدة 1 · وش يتقسّم لحاله",
   rule1Before: "أي شراء من",
@@ -402,10 +403,6 @@ const ar = {
       why: "هذا نموذج فكرة. كل شي تجريبي ومكتوب إنه تجريبي.",
     },
     {
-      what: "تطبيق الخطط اللي فيها رسوم تلقائياً",
-      why: "الموافقة والمرابحة. هذي القاعدة اللي تخلي المنتج نظامي، مو نقص فيه.",
-    },
-    {
       what: "أكثر من ثلاث قواعد",
       why: "كل قاعدة زيادة تخلي البطاقة أصعب تتوقعها، وهذي المشكلة اللي نحلها.",
     },
@@ -426,7 +423,7 @@ const ar = {
     "مو معتمد من ساما. هذي فكرة منتج، مو منتج جاهز للإطلاق، وأي ميزة جديدة للبطاقة في السعودية غالباً تحتاج عدم ممانعة من ساما.",
     "كل البيانات تجريبية: المشتريات والمتاجر ورقم البطاقة والتواريخ.",
     "رسوم خطة الـ 6 أشهر (160 ريال على 3,200) للتوضيح بس. تسعير المرابحة في تابي مو منشور.",
-    "الأدلة من الإمارات: مراجعات Google Play هناك. الطلب السعودي ما يبان في المراجعات (2 من 3,217)، والحجة السعودية مبنية على كلام تابي نفسها وتمويلها.",
+    "الأدلة من الإمارات: مراجعات Google Play هناك. الطلب السعودي ما يبان في المراجعات (2 من 3,217)، والحجة السعودية مبنية على كلام تابي نفسها وتمويلها.",
     "خطوات الفكرة 1 من صفحة بطاقة تابي في الإمارات (26 سبتمبر 2026)، وكل سطر خاص بالسعودية مقترح.",
     "شاشة المحفظة ومكينة الدفع مرسومة بدون أي علامات لآبل، ومو شاشات حقيقية.",
     "تابي تملك Tweeq، محفظة مرخّصة من ساما تصدر بطاقات وتشتغل كجهة مستقلة. «ما فيه بطاقة تابي في السعودية» يظل صحيح.",
@@ -606,6 +603,7 @@ const en: Copy = {
     "That's why Rule 3 is part of the product, not a limit on it.",
   ],
 
+  simTitle: "Try it yourself: move the rules, and watch what happens to each purchase.",
   rulesHeading: "Your rules",
   rule1Label: "Rule 1 · What splits on its own",
   rule1Before: "Over",
@@ -815,10 +813,6 @@ const en: Copy = {
       why: "It's a concept prototype. Everything is mocked and labelled mocked.",
     },
     {
-      what: "Auto-applying fee-bearing plans",
-      why: "Consent and Murabaha. It's the rule that makes the product legal, not a limitation.",
-    },
-    {
       what: "More than three rules",
       why: "Every extra rule makes the card harder to predict, which is the problem we're solving.",
     },
@@ -839,7 +833,7 @@ const en: Copy = {
     "Not SAMA-approved. This is a product concept, not an approved or deployable product; a new card feature in Saudi likely needs SAMA non-objection.",
     "All data is mocked: purchases, stores, card number, dates.",
     "The 6-month plan fee (SAR 160 on 3,200) is illustrative. Tabby's Murabaha pricing isn't public.",
-    "The evidence is from the UAE: Google Play reviews there. Saudi demand doesn't show in reviews (2 of 3,217); the Saudi case rests on Tabby's own words and its funding.",
+    "The evidence is from the UAE: Google Play reviews there. Saudi demand doesn't show in reviews (2 of 3,217); the Saudi case rests on Tabby's own words and its funding.",
     "Idea 1's steps come from the UAE Tabby Card page (26 Sep 2026); every Saudi-specific line is a proposal.",
     "The wallet sheet and the terminal are drawn with no Apple marks. They aren't real screens.",
     "Tabby owns Tweeq, a SAMA-licensed wallet that issues cards and runs as an independent entity. \"No Tabby Card in Saudi\" still holds.",

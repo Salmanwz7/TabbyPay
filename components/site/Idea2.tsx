@@ -64,8 +64,11 @@ export default function Idea2() {
         </div>
       </SectionShell>
 
-      <SectionShell>
-        <RulesSimulator />
+      <SectionShell id="try-rules">
+        <h2 className="display max-w-measure text-h3 sm:text-h2">{t.simTitle}</h2>
+        <div className="mt-s5">
+          <RulesSimulator />
+        </div>
       </SectionShell>
 
       {/* 2.3 · the rule that can't be changed, as a strength. */}
