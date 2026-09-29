@@ -425,21 +425,3 @@ back to LF (the repo's form). No content change.
 
 **G7 — Not changed:** the browser tab title still reads "مشاركة Tabby Pay ·
 تابي إماجن 2026" (Salman asked about the header only).
-
-## Split Rules, made easy (29 Sep 2026)
-
-**H1 — One three-step demo replaces the prototype and the simulator.** Salman:
-"the ui and applying the idea is frustrating, you have to think a lot; make
-it easy, same idea." The rules were shown twice (the 8-screen phone and the
-separate simulator), with sliders, a screen menu and an edge-case menu. Now:
-1 set your rule (two choices of three buttons: split from 200/300/500, cap
-1,000/2,000/3,000; the fee rule fixed), 2 pay (four purchases), 3 the
-Tabby app says what happened in one sentence, and asks only on a fee or
-past the cap ("split anyway"). The engine is unchanged (evaluatePurchase,
-schedules, CapBar; 45 tests). Each purchase is judged against the month so
-far, not accumulated, so order never changes an answer.
-Removed: SplitRulesApp.tsx, RulesSimulator.tsx, Slider.tsx, their CSS and
-92 unused strings per language (all in git history). The refund and
-mid-month-rule-change cases and the Screen 7 "not eligible" purchase are no
-longer on the page; the reducer that handles them stays in lib/machine.ts,
-tested. "Designed for, not built" is folded into a closed <details>.

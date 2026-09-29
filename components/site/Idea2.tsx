@@ -13,7 +13,8 @@ import { useLang } from "@/lib/LanguageProvider";
 import SectionShell from "@/components/ui/SectionShell";
 import BrokenPromise from "@/components/act1/BrokenPromise";
 import Evidence from "@/components/act1/Evidence";
-import RulesDemo from "@/components/phone/app/RulesDemo";
+import RulesSimulator from "@/components/sim/RulesSimulator";
+import SplitRulesApp from "@/components/phone/app/SplitRulesApp";
 
 export default function Idea2() {
   const { t } = useLang();
@@ -49,19 +50,25 @@ export default function Idea2() {
           ))}
         </p>
         <div className="mt-s5">
-          <RulesDemo />
+          <SplitRulesApp />
         </div>
-        {/* Folded away: worth knowing, not worth reading first. */}
-        <details className="mt-s5 flex flex-col gap-s2">
-          <summary className="min-h-tap cursor-pointer text-body font-semibold">{t.srNotBuiltHeading}</summary>
-          <ul className="mt-s2 flex flex-wrap gap-s1">
+        <div className="mt-s5 flex flex-col gap-s2">
+          <h3 className="text-body font-semibold">{t.srNotBuiltHeading}</h3>
+          <ul className="flex flex-wrap gap-s1">
             {t.srNotBuilt.map((item) => (
               <li key={item} className="tag-known">
                 {item}
               </li>
             ))}
           </ul>
-        </details>
+        </div>
+      </SectionShell>
+
+      <SectionShell id="try-rules">
+        <h2 className="display max-w-measure text-h3 sm:text-h2">{t.simTitle}</h2>
+        <div className="mt-s5">
+          <RulesSimulator />
+        </div>
       </SectionShell>
 
       {/* 2.3 · the rule that can't be changed, as a strength. */}
