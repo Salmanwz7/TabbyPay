@@ -725,3 +725,11 @@
 .lock .app-status .tnum {
   visibility: hidden;
 }
+
+/* The same notification, shown rather than pressed (RulesDemo). */
+.notif--static {
+  cursor: default;
+}
+.notif--static:hover {
+  border-color: var(--tabby-neutral-200);
+}
