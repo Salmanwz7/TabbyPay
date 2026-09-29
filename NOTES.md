@@ -425,3 +425,9 @@ back to LF (the repo's form). No content change.
 
 **G7 — Not changed:** the browser tab title still reads "مشاركة Tabby Pay ·
 تابي إماجن 2026" (Salman asked about the header only).
+
+**H1 — Tried and reverted (29 Sep 2026).** A three-step demo replaced the
+8-screen prototype and the simulator (commit 54d5c86). Salman: "its so bad,
+now i have to analyze to understand the idea, the previous was better."
+Reverted in full (git revert). Lesson: he reads the idea through the
+screens of the real app flow; don't collapse them into an abstract widget.
