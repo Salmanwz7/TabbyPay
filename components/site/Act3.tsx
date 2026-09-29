@@ -1,7 +1,8 @@
 "use client";
 
 /**
- * Who benefits · why now · the responsible-lending line (spec §12, Act 3).
+ * Who benefits · why now (spec §12, Act 3). The responsible-lending line
+ * was removed at Salman's request (NOTES H2).
  *
  * The selector is a tablist: three views of the same card, one visible at a
  * time. One tab stop, arrows follow the reading direction (§7), and the
@@ -14,7 +15,7 @@
 import { useRef, useState } from "react";
 import { useLang } from "@/lib/LanguageProvider";
 import { directionKeys } from "@/lib/format";
-import SectionShell, { Statement } from "@/components/ui/SectionShell";
+import SectionShell from "@/components/ui/SectionShell";
 
 export default function Act3() {
   const { t } = useLang();
@@ -38,10 +39,6 @@ export default function Act3() {
           </div>
         </div>
       </SectionShell>
-
-      <Statement id="responsible-lending" setup={t.lendingSetup}>
-        {t.lendingTitle}
-      </Statement>
     </>
   );
 }

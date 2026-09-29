@@ -452,33 +452,7 @@ const ar = {
   whyIndustryNote:
     "بطاقة تابي في الإمارات اليوم في المرحلة اليدوية. قواعدك خطوة بين الاثنين: تلقائي، بس بقواعد يحطها العميل.",
 
-  lendingTitle: "حد تحطه أنت، وموافقتك قبل أي رسوم.",
-  lendingSetup: [
-    "هذا أسهل تدافع عنه قدام الجهة المنظّمة من «كل شي تلقائي» أو «انسَ وتفاجأ بعدين».",
-    "وهو تصميم تقدر تابي تعرضه على ساما.",
-  ],
 
-  closeKicker: "الختام",
-  cutHeading: "وش شلت، وليش",
-  cuts: [
-    {
-      what: "Apple Pay وفيزا ونقاط البيع والتحقق من الهوية، الحقيقية",
-      why: "هذا نموذج فكرة. كل شي تجريبي ومكتوب إنه تجريبي.",
-    },
-    {
-      what: "أكثر من ثلاث قواعد",
-      why: "كل قاعدة زيادة تخلي البطاقة أصعب تتوقعها، وهذي المشكلة اللي نحلها.",
-    },
-    {
-      what: "قواعد حسب الفئة («قسّم البقالة، مو البنزين»)",
-      why: "مغرية، ومرحلة ثانية واضحة. بس تزيد التعقيد قبل ما يثبت الأساس.",
-    },
-  ],
-  testHeading: "وش أختبر أول داخل تابي",
-  tests: [
-    "هل العملاء يحطون قواعد أصلاً.",
-    "وهل الحد اللي يختارونه أقل من الحد اللي تعطيهم تابي.",
-  ],
   methodHeading: "الطريقة والحدود",
   methodLead:
     "مبنية على مراجعات بطاقة تابي في الإمارات، ووثائق منتجات تابي نفسها، وسابقة دولية. البطاقة مو موجودة في السعودية، فهذا تصميم لإطلاقها، مو إصلاح لمنتج سعودي قائم.",
@@ -925,33 +899,7 @@ const en: Copy = {
   whyIndustryNote:
     "The Tabby Card in the UAE is at the manual stage today. Split Rules is the step between: automatic, on rules the customer sets.",
 
-  lendingTitle: "A cap you set, and your yes before any fee.",
-  lendingSetup: [
-    "That's easier to defend to a regulator than either auto-everything or forget-and-find-out.",
-    "It's a design Tabby can put in front of SAMA.",
-  ],
 
-  closeKicker: "Close",
-  cutHeading: "What I cut, and why",
-  cuts: [
-    {
-      what: "Real Apple Pay, Visa, POS and identity checks",
-      why: "It's a concept prototype. Everything is mocked and labelled mocked.",
-    },
-    {
-      what: "More than three rules",
-      why: "Every extra rule makes the card harder to predict, which is the problem we're solving.",
-    },
-    {
-      what: "Category rules (\"split groceries, not fuel\")",
-      why: "Tempting, and a clear Phase 2. It adds complexity before the core is proven.",
-    },
-  ],
-  testHeading: "What I'd test first inside Tabby",
-  tests: [
-    "Whether customers set rules at all.",
-    "And whether the cap they choose is lower than the limit Tabby gives them.",
-  ],
   methodHeading: "Method and limitations",
   methodLead:
     "Built on UAE card reviews, Tabby's own product documentation, and an international precedent. The card isn't live in Saudi, so this designs its launch rather than fixing an existing Saudi product.",

@@ -431,3 +431,8 @@ back to LF (the repo's form). No content change.
 now i have to analyze to understand the idea, the previous was better."
 Reverted in full (git revert). Lesson: he reads the idea through the
 screens of the real app flow; don't collapse them into an abstract widget.
+
+**H2 — Removed at Salman's request (29 Sep 2026):** the responsible-lending
+statement («حد تحطه أنت…»), the «الختام» label, «وش شلت، وليش» and «وش أختبر
+أول داخل تابي». Kept «الطريقة والحدود»: it carries the not-SAMA-approved line
+the spec requires. Spec §12's Close is now method and limitations only.
