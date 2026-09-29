@@ -45,6 +45,15 @@ export default function IssueCardApp() {
   const now = railIndex(state);
 
   return (
+    <div className="flex flex-col gap-s4">
+      {/* Said first, above the phone, so nobody mistakes it for a picture. */}
+      <p className="flex items-center gap-s2 self-start rounded-tabby bg-green-tint p-s2 text-body text-ink">
+        <TapGlyph />
+        <span>
+          <span className="me-sentence font-semibold">{t.idea1TryLead}</span>
+          {t.idea1Try}
+        </span>
+      </p>
     <div className="grid items-start gap-s5 lg:grid-cols-2">
       <Phone>
         <AppShell tab={state.tab} onTab={(tab) => dispatch({ type: "TAB", tab })}>
@@ -53,7 +62,6 @@ export default function IssueCardApp() {
       </Phone>
 
       <div className="flex flex-col gap-s3 lg:sticky lg:top-s3">
-        <p className="hint">{t.idea1Try}</p>
         <ol aria-label={t.idea1StepsLabel} className="flex flex-col gap-s1">
           {t.idea1Steps.map((name, i) => (
             <li
@@ -73,6 +81,17 @@ export default function IssueCardApp() {
         </button>
       </div>
     </div>
+    </div>
+  );
+}
+
+/** A finger pressing: "you can press this". */
+function TapGlyph() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="flex-none">
+      <path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V10m0-1.5a1.5 1.5 0 0 1 3 0V11m0-1a1.5 1.5 0 0 1 3 0v4.5a6 6 0 0 1-6 6h-.8a6 6 0 0 1-4.6-2.2L4.3 15a1.5 1.5 0 0 1 2.3-1.9L9 15" />
+      <path d="M5.5 5.5 4 4M8.5 3V1.5M12.5 5.5 14 4" />
+    </svg>
   );
 }
 

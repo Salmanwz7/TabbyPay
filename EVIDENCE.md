@@ -137,3 +137,20 @@ live page before it is quoted in the room.
 - Tabby Saudi help, declined purchases: not checked.
 - UAE card late fees and card pause (Kredit.ae): not checked; not needed on the page.
 - How card authorisation and later conversion work at Tabby (§9 `[FILL]`): not public. Not claimed.
+
+## The Tabby Card, how it's paid for and split — checked 29 Sep 2026
+
+Asked by Salman (29 Sep): is the card topped up first, like a wallet card
+(Barq), or paid later? From Tabby's UAE pages:
+
+| Claim | Status | Source |
+|---|---|---|
+| Pay-later, not prepaid: link a debit/credit card "to cover Tabby payments"; "Pay up to 40 days later, with all purchases combined into a single monthly statement" | ✔ | tabby.ai/en-AE/card |
+| Billing cycle: 30 days from the first purchase; repayment "due within 10 days of the statement issue date" | ✔ | tabby.ai/en-AE/help/help-tabby-card/how-do-billing-cycles-work |
+| Splits are months: "split in over 4, 6, 8 or 10 months" | ✔ | tabby.ai/en-AE/card |
+| Free plan: no fees at Tabby Card partner stores only; Plus (AED 49/month): no fees anywhere. Fee amounts outside that: not published | ✔ | tabby.ai/en-AE/card |
+| Online with Apple Pay, Samsung Pay or Google Pay: "you don't have to approve it in the app" (manual card entry needs in-app approval) | ✔ | tabby.ai/en-AE/help/help-tabby-card/how-do-i-approve-my-online-purchases-with-tabby-card |
+| Balance "set at an individual level and reassessed regularly" | ✔ | tabby.ai/en-AE/card |
+
+Not found: when the first month of a card split is collected. The page shows
+the monthly amount only, with no dates.

@@ -477,19 +477,33 @@
   border: 6px solid var(--tabby-neutral-900);
 }
 
-/* Tabby's four-payment timeline: each circle fills by a quarter. */
-.pie4 {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
-  text-align: center;
+/* A plan you can pick: the whole row is the target, and the hidden native
+   radio's keyboard focus shows on the row. */
+.web-method--pick {
+  min-block-size: var(--tap);
+  cursor: pointer;
 }
-.pie4__dot {
-  inline-size: 28px;
-  block-size: 28px;
-  margin-inline: auto;
-  border-radius: 50%;
-  background: conic-gradient(var(--tabby-neutral-900) calc(var(--q) * 25%), var(--tabby-neutral-200) 0);
+.web-method--pick:has(input:focus-visible) {
+  outline: 3px solid var(--tabby-neutral-900);
+  outline-offset: 2px;
+}
+
+/* A notification from Tabby, over whatever the phone is showing. */
+.notif {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  inline-size: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--tabby-neutral-200);
+  border-radius: var(--radius-app-sm);
+  background: var(--tabby-neutral-50);
+  color: var(--tabby-neutral-900);
+  text-align: start;
+  cursor: pointer;
+}
+.notif:hover {
+  border-color: var(--tabby-neutral-900);
 }
 
 /* One case per row (BrokenPromise). Narrow: name, terminal, phone, controls.

@@ -385,3 +385,43 @@ url()s). Verified: `node scripts/serve.mjs` (port 4173) and out/index.html
 opened directly, both languages, 375 and 1440 px, all 55 controls pressed:
 no errors, no failed loads, no request leaves the machine, both Readex faces
 load, and the language toggle works (JS hydrates).
+
+## Salman's 15 fixes (29 Sep 2026)
+
+**G1 — Clarity rewrite.** Header "Tabby Pay" (no "مشاركة"); hero kicker gone;
+hero setup, the three answers, Idea 1's statement and setup, Idea 2's
+statement and setup, the evidence lead and the Split Rules lead rewritten so
+each says one thing plainly. The answers are now labelled lines ("في
+السعودية: …", "العميل: …") instead of one paragraph. The GM's 2022 line left
+Idea 1 (it lives in "Why now").
+
+**G2 — The comparison is now "today vs with your rules".** Salman: the Tabby
+Card sits in Apple Pay, online payment is Apple Pay with the Tabby Card, and
+afterwards the app applies Split Rules. So: row 1 is the UAE today at a
+terminal (manual split after); row 2 is online with Apple Pay, then Tabby's
+notification, then the plan receipt the rule made (tagged "Proposal").
+Today-first so the page reads problem → answer. The old "Tabby at online
+checkout" phone and the "Online is Tabby's brand" caption are gone.
+Verified: Apple Pay payments with the Tabby Card need no in-app approval
+(EVIDENCE, 29 Sep), so the sheet is the whole payment.
+
+**G3 — Plans are months, and pressable.** The UAE page says "4, 6, 8 or 10
+months", so all four read "أشهر". A native radio group; pressing one shows
+the monthly amount (`lib/card-plans.ts`, TDD, 6 tests: the leftover halalas
+go in the first month, every plan adds back to the purchase). No dates (not
+published) and no fee figure (not published): the screen says free at
+partners or with Plus, otherwise a fee Tabby doesn't publish.
+
+**G4 — How the card is paid for.** Pay-later, not prepaid (EVIDENCE, 29 Sep).
+Said in Idea 1's setup ("ما تشحنها مثل بطاقات المحافظ…") and in the card's
+perks (pay now, settle once a month; split over 4–10 months).
+
+**G5 — Idea 1's phone says it works.** A green note above the phone
+("الجوال يشتغل. اضغط الإعلان الأخضر أو تبويب «البطاقة»…"), where it's seen
+before the phone on every width.
+
+**G6 — Line endings.** A `git stash pop` left lib/copy.ts CRLF; normalised
+back to LF (the repo's form). No content change.
+
+**G7 — Not changed:** the browser tab title still reads "مشاركة Tabby Pay ·
+تابي إماجن 2026" (Salman asked about the header only).

@@ -1,4 +1,5 @@
 import Hero from "@/components/site/Hero";
+import Answers from "@/components/site/Answers";
 import Idea1 from "@/components/site/Idea1";
 import Idea2 from "@/components/site/Idea2";
 import Act3 from "@/components/site/Act3";
@@ -10,6 +11,7 @@ export default function Page() {
   return (
     <>
       <Hero />
+      <Answers />
       <Idea1 />
       <Idea2 />
       <Act3 />

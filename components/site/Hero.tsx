@@ -32,7 +32,6 @@ export default function Hero() {
       className="mx-auto grid w-full max-w-col items-center gap-s5 px-s2 py-s5 sm:px-s4 lg:grid-cols-2 lg:py-s6"
     >
       <div className="flex flex-col">
-        <p className="mb-s3 text-small font-medium text-muted">{t.heroKicker}</p>
         <h1 id="hero-title" className="display max-w-measure text-h3 sm:text-h2 lg:text-h1">
           {t.heroTitle}
         </h1>
