@@ -27,6 +27,10 @@ export default function Close() {
             </li>
           ))}
         </ul>
+        <div className="flex max-w-measure flex-col gap-s1">
+          <h3 className="text-body font-semibold">{t.modelHeading}</h3>
+          <p className="text-body text-ink">{t.modelText}</p>
+        </div>
       </section>
     </SectionShell>
   );

@@ -24,6 +24,7 @@
 import { useEffect, useReducer, useRef, useState } from "react";
 import {
   canChangePlan,
+  canPayIn4,
   capUsed,
   evaluatePurchase,
   initialState,
@@ -46,6 +47,7 @@ import Money from "@/components/ui/Money";
 import CapBar from "@/components/ui/CapBar";
 import PlanSchedule from "@/components/ui/PlanSchedule";
 import Slider from "@/components/ui/Slider";
+import EvalOrder from "@/components/ui/EvalOrder";
 
 const NOTIFY_AFTER_MS = 1400;
 const THRESHOLD = { min: 50, max: 1000, step: 50 };
@@ -251,14 +253,23 @@ function Screen({ state, dispatch, headingRef, revealId }: ScreenProps) {
     }
 
     case "ASK_CUSTOMER": {
-      // Screen 6. Never automatic; the cost is the headline.
+      // Screen 6. Never automatic; the cost is the headline. Over the cap as
+      // well (3,200 on 840 of 2,000): both reasons, one decision.
       const p = byId(phase.purchaseId);
       const plan = p.feePlan!;
+      const overCap = evaluatePurchase(p, state.rules, capUsed(state)) === "OVER_CAP_FEE_PLAN";
       return (
         <>
           <Notif />
-          {heading(t.feeTitle)}
+          {heading(overCap ? t.overCapFeeTitle : t.feeTitle)}
           <Merchant purchaseId={p.id} />
+          {overCap ? (
+            <>
+              <p className="text-body text-ink-soft">{t.overCapFeeOne}</p>
+              <CapBar used={capUsed(state)} cap={state.rules.cap} adding={p.amount} />
+            </>
+          ) : null}
+          <p className="text-small text-muted">{t.feeWhy}</p>
           <p className="text-body text-ink-soft">
             {t.feeMonthsBefore} <bdi className="tnum">{plan.months}</bdi> {t.feeMonthsAfter}
           </p>
@@ -276,9 +287,6 @@ function Screen({ state, dispatch, headingRef, revealId }: ScreenProps) {
             <button type="button" className="app-btn" onClick={() => dispatch({ type: "CHOOSE", choice: "fee_plan" })}>
               {t.srFeeSplitA} <bdi className="tnum">{plan.months}</bdi> {t.srFeeSplitB}
             </button>
-            <button type="button" className="app-btn app-btn--quiet" onClick={() => dispatch({ type: "CHOOSE", choice: "pay_in_4" })}>
-              {t.srFeeIn4}
-            </button>
             <button type="button" className="app-btn app-btn--quiet" onClick={() => dispatch({ type: "CHOOSE", choice: "statement" })}>
               {t.srLeave}
             </button>
@@ -295,7 +303,7 @@ function Screen({ state, dispatch, headingRef, revealId }: ScreenProps) {
     case "CHANGE_PLAN": {
       const e = state.ledger.find((x) => x.id === phase.entryId)!;
       const options = [
-        { plan: "pay_in_4" as const, label: t.srPlanIn4 },
+        ...(canPayIn4(e.purchase) ? [{ plan: "pay_in_4" as const, label: t.srPlanIn4 }] : []),
         { plan: "statement" as const, label: t.srPlanStatement },
         ...(e.purchase.feePlan ? [{ plan: "fee_plan" as const, label: t.srPlanFee }] : []),
       ];
@@ -450,6 +458,10 @@ function SetRules({ state, dispatch, heading }: { state: State; dispatch: Dispat
         <p className="text-small text-muted">{t.rule3Locked}</p>
       </div>
 
+      <div className="app-tile">
+        <EvalOrder compact />
+      </div>
+
       {/* Edge case: a rule changed after this month's purchases (§5.4). Said
           at the moment of change. The live region stays mounted. */}
       <p aria-live="polite" className={state.rulesChangedMidMonth ? "app-tile text-body font-semibold" : "sr-only"}>
@@ -573,10 +585,17 @@ function Receipt({
           </>
         ) : (
           <>
-            {/* Screen 5: two choices, no judgement in the copy. */}
-            <button type="button" className="app-btn" onClick={() => dispatch({ type: "PICK_PLAN", plan: "pay_in_4" })}>
-              {t.srSplitAnyway}
-            </button>
+            {/* Screen 5: two choices, no judgement in the copy. A purchase
+                over the Pay in 4 limit offers its fee plan, named as one. */}
+            {canPayIn4(e.purchase) ? (
+              <button type="button" className="app-btn" onClick={() => dispatch({ type: "PICK_PLAN", plan: "pay_in_4" })}>
+                {t.srSplitAnyway}
+              </button>
+            ) : (
+              <button type="button" className="app-btn" onClick={() => dispatch({ type: "PICK_PLAN", plan: "fee_plan" })}>
+                {t.srPlanFee}
+              </button>
+            )}
             <button type="button" className="app-btn app-btn--quiet" onClick={home}>
               {t.srLeave}
             </button>

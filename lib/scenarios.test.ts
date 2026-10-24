@@ -51,6 +51,8 @@ test("this_month (Screen 8): a mixed month, grouped view open", () => {
   assert.deepEqual(s.phase, { tag: "IDLE", view: "this_month" });
   const reasons = s.ledger.map((e) => e.reason).sort();
   assert.deepEqual(reasons, ["below_threshold", "by_rule", "by_you"]);
-  // 840 before + Jarir 450 by rule + electronics 3,200 split in 4 by you.
-  assert.equal(capUsed(s), 840 + 450 + 3200);
+  // 840 before + Jarir 450 by rule = 1,290. Electronics 3,200 went on a
+  // 6-month fee plan by the customer's yes, which doesn't fill the cap.
+  assert.equal(capUsed(s), 1290);
+  assert.equal(s.ledger.find((e) => e.purchase.id === "electronics")!.plan, "fee_plan");
 });

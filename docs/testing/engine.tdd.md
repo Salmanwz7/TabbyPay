@@ -33,4 +33,4 @@ machine.ts 99.43% lines · 80.95% branches · 100% functions.
 | 11 | Refund cancels remaining payments, returns the first, frees the cap | `a refund after a split…` |
 | 12 | Change plan until statement close | `change plan…` |
 | 13 | Events out of phase return the same object (no render, no corruption) | `events that do not apply…` |
-| 14 | Screen 5 scenario reproduces "1,200 of 2,000" | `the over-cap scenario…` |
+| 14 | Screen 5 scenario starts from the same 840 of 2,000 as everywhere else | `the over-cap scenario…` |

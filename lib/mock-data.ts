@@ -26,12 +26,17 @@ export type Purchase = {
   merchant: { ar: string; en: string };
   amount: number;
   /**
-   * Per-transaction eligibility (spec §2.4). A rule is a preference, not a
-   * promise: Tabby checks every purchase on its own. The reason is never
-   * exposed, so it is not modelled.
+   * Per-transaction eligibility (spec §2.4): Tabby's approval at the tap and
+   * an allowed merchant category. A rule is a preference, not a promise:
+   * Tabby checks every purchase on its own. The screen names the two checks,
+   * never a risk reason, so which one failed is not modelled.
    */
   eligible: boolean;
-  /** A longer plan with a cost. Present only when the purchase qualifies. */
+  /**
+   * A longer plan with a cost. Present when the purchase is over the
+   * customer's Pay in 4 limit, so this plan is its only split; and only from
+   * SAR 2,000, the floor of the licensed plans.
+   */
   feePlan?: { months: number; fee: number };
 };
 
@@ -49,9 +54,6 @@ export const DEFAULT_RULES: Rules = { threshold: 300, cap: 2000 };
 
 /** Already split this month before the visitor arrives (spec §5.3 Screen 1). */
 export const MONTH_TO_DATE = 840;
-
-/** Screen 5's own starting point: "SAR 1,200 of a 2,000 cap". */
-export const OVER_CAP_MONTH_TO_DATE = 1200;
 
 /** Fact, not mock: Tabby's Saudi longer plans start at SAR 2,000. */
 export const LONG_PLAN_MIN = 2000;

@@ -14,7 +14,8 @@
  *
  *   IDLE ─TAP→ TAP ─AUTHORISE→ ELIGIBILITY_CHECK ─NOTIFY→
  *       NOT_ELIGIBLE / BELOW_THRESHOLD / OVER_CAP → STATEMENT    → RECEIPT
- *       FEE_PLAN_AVAILABLE → ASK_CUSTOMER ─CHOOSE→ PLAN_CREATED
+ *       FEE_PLAN_AVAILABLE / OVER_CAP_FEE_PLAN
+ *                          → ASK_CUSTOMER ─CHOOSE→ PLAN_CREATED
  *                                                  or STATEMENT → RECEIPT
  *       MATCHES_RULE → PLAN_CREATED                             → RECEIPT
  *   RECEIPT ─CHANGE_PLAN→ CHANGE_PLAN ─PICK_PLAN→ PLAN_UPDATED  → RECEIPT
@@ -30,7 +31,6 @@ import {
   DEFAULT_RULES,
   LONG_PLAN_MIN,
   MONTH_TO_DATE,
-  OVER_CAP_MONTH_TO_DATE,
   STATEMENT_CLOSES,
   TODAY,
   byId,
@@ -44,9 +44,11 @@ import {
 
 export type Outcome =
   | "NOT_ELIGIBLE"
-  | "FEE_PLAN_AVAILABLE"
   | "BELOW_THRESHOLD"
   | "OVER_CAP"
+  | "FEE_PLAN_AVAILABLE"
+  /** Both at once (electronics, 3,200): one ask that names both reasons. */
+  | "OVER_CAP_FEE_PLAN"
   | "MATCHES_RULE";
 
 export type Plan = "statement" | "pay_in_4" | "fee_plan";
@@ -127,22 +129,34 @@ export type Event =
 // ---------------------------------------------------------------------------
 
 /**
- * Checks run in this order, and the order is the product:
+ * Checks run in this order, and the order is the product. The page shows the
+ * same four steps (copy.ts `evalOrder`):
  *
- * 1. Eligibility first. A rule is a preference, not a promise (§2.4).
- * 2. A plan with a cost always asks, before any rule can apply it (§2.4,
- *    Murabaha consent). No slider position reaches past this line.
- * 3. Under the threshold: not split.
- * 4. Would pass the cap: not split. Landing exactly on the cap is allowed.
- * 5. Otherwise: split into 4, fee-free, "by your rule".
+ * 1. Eligible? Tabby's approval at the tap, and an allowed merchant category.
+ *    A rule is a preference, not a promise (§2.4). No: on the statement.
+ * 2. At or over the Rule 1 threshold? No: on the statement.
+ * 3. Would it pass the cap? Then it is never auto-split, not even in part.
+ *    Landing exactly on the cap is allowed.
+ * 4. Does the available plan have a fee? Then it always asks first (Murabaha
+ *    consent). No slider position auto-applies a fee plan. Reached only
+ *    after 1 and 2 pass: under the threshold, nothing is offered at all.
+ *
+ * Over the cap AND a fee is one ask that names both reasons.
  */
 export function evaluatePurchase(p: Purchase, rules: Rules, monthToDate: number): Outcome {
   if (!p.eligible) return "NOT_ELIGIBLE";
-  if (p.feePlan && p.amount >= LONG_PLAN_MIN) return "FEE_PLAN_AVAILABLE";
   if (p.amount < rules.threshold) return "BELOW_THRESHOLD";
-  if (monthToDate + p.amount > rules.cap) return "OVER_CAP";
+  const overCap = monthToDate + p.amount > rules.cap;
+  if (p.feePlan && p.amount >= LONG_PLAN_MIN) return overCap ? "OVER_CAP_FEE_PLAN" : "FEE_PLAN_AVAILABLE";
+  if (overCap) return "OVER_CAP";
   return "MATCHES_RULE";
 }
+
+/** The outcomes that stop and ask the customer before anything is created. */
+export const asksFirst = (o: Outcome) => o === "FEE_PLAN_AVAILABLE" || o === "OVER_CAP_FEE_PLAN";
+
+/** A purchase with a fee plan is over the customer's Pay in 4 limit (mock-data.ts). */
+export const canPayIn4 = (p: Purchase) => p.eligible && !p.feePlan;
 
 // ---------------------------------------------------------------------------
 // Schedules
@@ -211,7 +225,7 @@ export function capUsed(s: State): number {
 /** Plans can be changed until the statement closes (§5.1). */
 export const canChangePlan = (e: Entry) => !e.refund && TODAY <= STATEMENT_CLOSES;
 
-const OUTCOME_TO_ENTRY: Record<Exclude<Outcome, "FEE_PLAN_AVAILABLE">, Pick<Entry, "plan" | "reason" | "resolution">> = {
+const OUTCOME_TO_ENTRY: Record<Exclude<Outcome, "FEE_PLAN_AVAILABLE" | "OVER_CAP_FEE_PLAN">, Pick<Entry, "plan" | "reason" | "resolution">> = {
   MATCHES_RULE: { plan: "pay_in_4", reason: "by_rule", resolution: "PLAN_CREATED" },
   BELOW_THRESHOLD: { plan: "statement", reason: "below_threshold", resolution: "STATEMENT" },
   OVER_CAP: { plan: "statement", reason: "over_cap", resolution: "STATEMENT" },
@@ -263,7 +277,7 @@ export function reducer(s: State, e: Event): State {
       if (phase.tag !== "ELIGIBILITY_CHECK") return s;
       const p = byId(phase.purchaseId);
       const outcome = evaluatePurchase(p, s.rules, capUsed(s));
-      if (outcome === "FEE_PLAN_AVAILABLE") {
+      if (asksFirst(outcome)) {
         return { ...s, phase: { tag: "ASK_CUSTOMER", purchaseId: p.id } };
       }
       return record(s, p, outcome, OUTCOME_TO_ENTRY[outcome]);
@@ -272,10 +286,13 @@ export function reducer(s: State, e: Event): State {
     case "CHOOSE": {
       if (phase.tag !== "ASK_CUSTOMER") return s;
       const p = byId(phase.purchaseId);
+      if (e.choice === "pay_in_4" && !canPayIn4(p)) return s;
+      // Same state as at NOTIFY, so the same outcome: the ask, recorded as it was.
+      const outcome = evaluatePurchase(p, s.rules, capUsed(s));
       if (e.choice === "statement") {
-        return record(s, p, "FEE_PLAN_AVAILABLE", { plan: "statement", reason: "you_chose_statement", resolution: "STATEMENT" });
+        return record(s, p, outcome, { plan: "statement", reason: "you_chose_statement", resolution: "STATEMENT" });
       }
-      return record(s, p, "FEE_PLAN_AVAILABLE", { plan: e.choice, reason: "by_you", resolution: "PLAN_CREATED" });
+      return record(s, p, outcome, { plan: e.choice, reason: "by_you", resolution: "PLAN_CREATED" });
     }
 
     case "CHANGE_PLAN": {
@@ -294,6 +311,7 @@ export function reducer(s: State, e: Event): State {
       if (entry.plan === e.plan) return { ...s, phase: back };
       if (entry.outcome === "NOT_ELIGIBLE" && e.plan !== "statement") return s;
       if (e.plan === "fee_plan" && !entry.purchase.feePlan) return s;
+      if (e.plan === "pay_in_4" && !canPayIn4(entry.purchase)) return s;
 
       const next = updateEntry(s, entry.id, (x) => ({
         ...x,
@@ -352,10 +370,12 @@ function openScenario(id: ScenarioId): State {
       // Screen 4: Jarir, SAR 450, over a SAR 300 rule.
       return run(tapThrough("jarir"));
     case "over_cap":
-      // Screen 5: SAR 1,200 of a 2,000 cap, then the SAR 1,400 furniture.
-      return run(tapThrough("furniture"), { ...initialState(), baseMonthToDate: OVER_CAP_MONTH_TO_DATE });
+      // Screen 5: SAR 840 of a 2,000 cap, then the SAR 1,400 furniture
+      // (2,240). The same 840 as the card screen and the simulator.
+      return run(tapThrough("furniture"));
     case "fee_plan":
-      // Screen 6: electronics, SAR 3,200. Asks; nothing is recorded yet.
+      // Screen 6: electronics, SAR 3,200. Over the cap and a fee: asks once,
+      // naming both reasons; nothing is recorded yet.
       return run(tapThrough("electronics"));
     case "not_eligible":
       // Screen 7: the salon purchase goes through but can't be split.
@@ -370,12 +390,13 @@ function openScenario(id: ScenarioId): State {
         { type: "SHOW", view: "set_rules" },
       ]);
     case "this_month":
-      // Screen 8: one split by rule, one on the statement, one split by you.
+      // Screen 8: one split by rule, one on the statement, one split by you
+      // (the 6-month fee plan, the only split 3,200 has).
       return run([
         ...tapThrough("jarir"),
         ...tapThrough("pharmacy"),
         ...tapThrough("electronics"),
-        { type: "CHOOSE", choice: "pay_in_4" },
+        { type: "CHOOSE", choice: "fee_plan" },
         { type: "SHOW", view: "this_month" },
       ]);
   }

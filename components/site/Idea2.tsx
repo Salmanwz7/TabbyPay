@@ -81,6 +81,17 @@ export default function Idea2() {
             </span>
           ))}
         </p>
+        <div className="mt-s4 flex max-w-measure flex-col gap-s2">
+          <div className="flex flex-wrap items-center gap-s2">
+            <h3 className="text-body font-semibold">{t.safetyHeading}</h3>
+            <span className="tag-guess">{t.appProposal}</span>
+          </div>
+          <ul className="flex list-disc flex-col gap-s1 ps-s3 text-body text-ink marker:text-muted">
+            {t.safetyLines.map((line) => (
+              <li key={line}>{line}</li>
+            ))}
+          </ul>
+        </div>
       </SectionShell>
     </>
   );

@@ -26,7 +26,7 @@
  */
 
 import { useRef, useState } from "react";
-import { evaluatePurchase, payIn4, type Outcome } from "@/lib/machine";
+import { asksFirst, evaluatePurchase, payIn4, type Outcome } from "@/lib/machine";
 import {
   DEFAULT_RULES,
   HERO_PURCHASE_IDS,
@@ -44,6 +44,7 @@ import Slider from "@/components/ui/Slider";
 import Money from "@/components/ui/Money";
 import CapBar from "@/components/ui/CapBar";
 import PlanSchedule from "@/components/ui/PlanSchedule";
+import EvalOrder from "@/components/ui/EvalOrder";
 
 const THRESHOLD = { min: 50, max: 1000, step: 50 };
 const CAP = { min: 500, max: 5000, step: 100 };
@@ -53,6 +54,7 @@ const OUTCOME_WORD: Record<Outcome, keyof Copy> = {
   BELOW_THRESHOLD: "outcomeStatement",
   OVER_CAP: "outcomeOverCap",
   FEE_PLAN_AVAILABLE: "outcomeAsks",
+  OVER_CAP_FEE_PLAN: "outcomeOverCapFee",
   NOT_ELIGIBLE: "outcomeNotEligible",
 };
 
@@ -114,6 +116,10 @@ export default function RulesSimulator() {
         </div>
 
         <LockedRule t={t} />
+
+        <div className="border-t border-rule pt-s3">
+          <EvalOrder />
+        </div>
 
         <div className="flex flex-col gap-s2 border-t border-rule pt-s3">
           <h4 className="text-body font-semibold">{t.purchasesHeading}</h4>
@@ -206,7 +212,9 @@ export default function RulesSimulator() {
           <CapBar
             used={MONTH_TO_DATE}
             cap={rules.cap}
-            adding={outcome === "MATCHES_RULE" || outcome === "OVER_CAP" ? selected.amount : 0}
+            adding={
+              outcome === "MATCHES_RULE" || outcome === "OVER_CAP" || outcome === "OVER_CAP_FEE_PLAN" ? selected.amount : 0
+            }
           />
         </div>
       </section>
@@ -288,7 +296,7 @@ function PurchaseTile({
  */
 function OutcomeWord({ outcome, label }: { outcome: Outcome; label: string }) {
   if (outcome === "MATCHES_RULE") return <span className="hint text-ink">{label}</span>;
-  if (outcome === "FEE_PLAN_AVAILABLE") return <span className="tag-guess">{label}</span>;
+  if (asksFirst(outcome)) return <span className="tag-guess">{label}</span>;
   return <span className="text-small text-muted">{label}</span>;
 }
 
@@ -321,13 +329,15 @@ function ReceiptBody({ purchase, outcome, rules }: { purchase: Purchase; outcome
     );
   }
 
-  if (outcome === "FEE_PLAN_AVAILABLE" && purchase.feePlan) {
+  if (asksFirst(outcome) && purchase.feePlan) {
     const { months, fee } = purchase.feePlan;
     // Spec §11.2: the fee is the largest number on its screen. Fee and total
     // are text-figure (40px); nothing else in this card is above text-title.
     return (
       <>
-        <p className="text-lead font-semibold">{t.feeTitle}</p>
+        <p className="text-lead font-semibold">{outcome === "OVER_CAP_FEE_PLAN" ? t.overCapFeeTitle : t.feeTitle}</p>
+        {outcome === "OVER_CAP_FEE_PLAN" ? <p className="text-body text-ink-soft">{t.overCapFeeOne}</p> : null}
+        <p className="max-w-measure text-small text-muted">{t.feeWhy}</p>
         <div className="flex flex-col gap-s1">
           <p className="text-body text-ink-soft">
             {t.feeMonthsBefore} <bdi className="tnum">{months}</bdi> {t.feeMonthsAfter}

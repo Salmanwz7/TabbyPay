@@ -436,3 +436,24 @@ screens of the real app flow; don't collapse them into an abstract widget.
 statement («حد تحطه أنت…»), the «الختام» label, «وش شلت، وليش» and «وش أختبر
 أول داخل تابي». Kept «الطريقة والحدود»: it carries the not-SAMA-approved line
 the spec requires. Spec §12's Close is now method and limitations only.
+
+## Rule order and consistency fixes (25 Oct 2026, with Salman)
+
+**O1 — Check order changed (supersedes P4).** Eligible? → at or over the
+threshold? → over the cap? → does the plan on offer have a fee? → split. The
+page shows these four steps in the simulator and on the Set-rules screen.
+Electronics 3,200 (840 + 3,200 > 2,000, with a fee) is the new outcome
+`OVER_CAP_FEE_PLAN`: one ask that names both reasons. Fee plans still never
+auto-apply at any slider position (tested).
+
+**O2 — A purchase with a fee plan is over the customer's Pay in 4 limit.** So
+"Pay in 4 instead" is gone from the fee screen and from Change plan for
+electronics. Its only split is the 6-month Murabaha plan. Screen 8 now shows
+electronics on that plan, and the cap reads 1,290 (840 + 450).
+
+**O3 — Screen 5 starts from 840, not the spec's 1,200**, so the card, the
+simulator and the over-cap screen all say "2,240 of 2,000".
+
+**O4 — Not eligible names the two checks (Tabby's approval, merchant
+category), never a risk reason.** This is a compromise between "notify with
+the reason" and spec §5.3 Screen 7, which says to expose no risk reasons.

@@ -38,7 +38,7 @@ const ar = {
   ideaWord: "الفكرة",
   heroIdea1: "نجيب بطاقة تابي للسعودية",
   heroIdea1Sub: "تطلبها من تطبيق تابي، وتدفع فيها في أي محل يقبل فيزا.",
-  heroIdea2: "دفعاتك تنقسم لحالها، بقواعد تحطها أنت",
+  heroIdea2: "دفعاتك المؤهلة تنقسم لحالها، بقواعد تحطها أنت",
   heroIdea2Sub: "تقول مرة وحدة وش ينقسم، وبعد كل دفعة تعرف خطتها على طول.",
   heroPhoneCaption: "تطبيق تابي السعودي مع تبويب البطاقة الجديد. تصوّر مبسّط، مو التطبيق الفعلي.",
 
@@ -68,7 +68,7 @@ const ar = {
         { k: "الفكرة 1", v: "بطاقة تابي في تطبيق تابي السعودي. تطلبها، تضيفها لـ Apple Pay، وتدفع فيها في أي محل." },
         {
           k: "الفكرة 2",
-          v: "تحط قاعدة مرة وحدة، مثلاً: «أي شراء من 300 ريال وفوق، قسّمه على 4». وبعدها كل دفعة تنقسم لحالها، ويوصلك إشعار بخطتها على طول.",
+          v: "تحط قاعدة مرة وحدة، مثلاً: «أي شراء من 300 ريال وفوق، قسّمه على 4». وبعدها كل دفعة تنقسم لحالها إذا كانت مؤهلة، ويوصلك إشعار بخطتها على طول.",
         },
         { k: "", v: "وأي خطة فيها رسوم، ما تصير إلا إذا وافقت." },
       ],
@@ -219,14 +219,13 @@ const ar = {
   srRefundedA: "رجّعت المشتريات. رجع لك",
   srRefundedB: "، وانلغت",
   srRefundedC: "دفعات.",
-  srNotEligible: "هذي العملية ما تتقسّم. الدفع تم، وهي على كشفك.",
+  srNotEligible: "قاعدتك تفضيل، مو ضمان. تابي تتأكد من كل عملية لحظة الدفع: موافقتها، وفئة المحل. هذي ما تأهّلت، فما تتقسّم. الدفع تم، وهي على كشفك.",
   srNotEligibleNext: "تقدر تدفعها كاملة لين يقفل كشفك.",
   srYouChoseStatement: "خليتها على كشفك.",
   srSplitAnyway: "قسّمها على 4",
   srLeave: "خلّها على كشفي",
   srFeeSplitA: "قسّمها على",
   srFeeSplitB: "أشهر",
-  srFeeIn4: "ادفعها على 4 بدالها",
   srChangeTitle: "اختر خطة",
   srPlanIn4: "4 دفعات، بدون رسوم",
   srPlanStatement: "على كشفك",
@@ -243,6 +242,21 @@ const ar = {
     "في السعودية، الخطط الأطول تمشي على المرابحة: تكلفة متفق عليها من البداية. ما أحد يدخل فيها بدون ما يوافق.",
     "عشان كذا القاعدة الثالثة جزء من المنتج، مو قيد عليه.",
   ],
+  safetyHeading: "وحماية لك",
+  safetyLines: [
+    "القواعد مطفأة من البداية، وأنت اللي تشغّلها. في النموذج مشغّلة، عشان تشوف وش تسوي.",
+    "توقفها مؤقتاً بضغطة، وترجّعها متى ما تبي.",
+    "ملخص كل شهر: كم انقسم لحاله، وكم باقي عليك. مثل شاشة «هالشهر» في الجوال.",
+  ],
+
+  evalOrderHeading: "ترتيب القواعد، على كل عملية",
+  evalOrder: [
+    "مؤهلة للتقسيم؟ موافقة تابي لحظة العملية، وفئة المحل مسموحة. لا ← على الكشف، ويوصلك إشعار بالسبب.",
+    "من حد القاعدة 1 وفوق؟ لا ← على الكشف.",
+    "بتطلّعك فوق سقفك؟ نعم ← ما تنقسم لحالها، ولا جزء منها. يوصلك إشعار إنها فوق سقفك، وتقدر تقسّمها يدوياً.",
+    "الخطة المتاحة فيها رسوم؟ نعم ← تسألك أول، دايم.",
+  ],
+  evalOrderEnd: "عدّت الأربع ← تنقسم على 4 لحالها.",
 
   simTitle: "جرّبها بنفسك: حرّك القواعد، وشوف وش يصير لكل عملية.",
   rulesHeading: "قواعدك",
@@ -268,6 +282,7 @@ const ar = {
   outcomeStatement: "على الكشف",
   outcomeOverCap: "فوق سقفك",
   outcomeAsks: "يسألك",
+  outcomeOverCapFee: "فوق سقفك + رسوم · يسألك",
   outcomeNotEligible: "ما يتقسّم",
 
   // --- receipt -------------------------------------------------------------
@@ -283,8 +298,12 @@ const ar = {
   belowAfter: ")، فما تقسّم. تقدر تقسّمه بنفسك.",
   overCapBefore: "هذا الشراء بيطلّعك فوق سقفك",
   overCapAfter:
-    "، فما تقسّم لحاله. هو على كشفك، وتقدر تقسّمه بنفسك.",
+    "، فما تقسّم لحاله، ولا جزء منه. هو على كشفك. تبي تقسّمه يدوياً؟",
   feeTitle: "هذي الخطة فيها رسوم، فتسألك أول.",
+  overCapFeeTitle: "فوق سقفك، والخطة المتاحة فيها رسوم.",
+  overCapFeeOne: "سببين، وقرار واحد يدوي منك.",
+  feeWhy:
+    "ليش فيها رسوم؟ هذا الشراء فوق حد التقسيم على 4 المتاح لك، فالمتاح خطة 6 أشهر بالمرابحة. وهذا ضمن رخصة التمويل الاستهلاكي المعلنة: مشتريات من 2,000 إلى 50,000 ريال، لين 12 شهر.",
   feeMonthsBefore: "تقدر تقسّمه على",
   feeMonthsAfter: "شهور، برسوم",
   feeTotal: "المجموع",
@@ -298,10 +317,10 @@ const ar = {
 
   // --- act 1 ---------------------------------------------------------------
   act1Kicker: "الفكرة 2 · قواعدك",
-  act1Statement: "اليوم: تدفع بالبطاقة، وبعدين تقسّم بيدك. مع قواعدك: تنقسم لحالها.",
+  act1Statement: "اليوم: تدفع بالبطاقة، وبعدين تقسّم بيدك. مع قواعدك: تنقسم لحالها، إذا كانت مؤهلة.",
   act1Setup: [
     "في الإمارات اليوم، كل دفعة بالبطاقة لازم تفتح بعدها التطبيق وتقسّمها بنفسك.",
-    "مع قواعدك، تحدد مرة وحدة وش ينقسم. وبعدها كل دفعة تنقسم لحالها، ويوصلك إشعار بخطتها.",
+    "مع قواعدك، تحدد مرة وحدة وش ينقسم. وبعدها كل دفعة تنقسم لحالها إذا كانت مؤهلة، ويوصلك إشعار بخطتها.",
   ],
 
   bpHeading: "جرّبها بنفسك",
@@ -353,7 +372,7 @@ const ar = {
   bpPosAmount: "المبلغ",
   bpReceipt: "إيصال",
   bpBackToStore: "ارجع للمتجر",
-  bpOnlineAside: "تدفع ببطاقة تابي من Apple Pay مثل أي بطاقة. بعد الدفع، قاعدتك تقسّم العملية لحالها، ويوصلك إشعار من تابي بخطتها. ما تسوي شي ثاني.",
+  bpOnlineAside: "تدفع ببطاقة تابي من Apple Pay مثل أي بطاقة. بعد الدفع، إذا كانت العملية مؤهلة، قاعدتك تقسّمها لحالها، ويوصلك إشعار من تابي بخطتها. ما تسوي شي ثاني.",
   bpOpenApp: "بعدين: افتح التطبيق",
   bpActivity: "عمليات البطاقة",
   bpOnStatement: "على كشفك",
@@ -463,9 +482,13 @@ const ar = {
     "الأدلة من الإمارات: مراجعات Google Play هناك. الطلب السعودي ما يبان في المراجعات (2 من 3,217)، والحجة السعودية مبنية على كلام تابي نفسها وتمويلها.",
     "خطوات الفكرة 1 من صفحة بطاقة تابي في الإمارات (26 سبتمبر 2026)، وكل سطر خاص بالسعودية مقترح.",
     "شاشة المحفظة ومكينة الدفع مرسومة بدون أي علامات لآبل، ومو شاشات حقيقية.",
-    "تابي تملك Tweeq، محفظة مرخّصة من ساما تصدر بطاقات وتشتغل كجهة مستقلة. «ما فيه بطاقة تابي في السعودية» يظل صحيح.",
+    "تابي تملك طويق (Tweeq)، محفظة مرخّصة من ساما تصدر بطاقات وتشتغل كجهة مستقلة. «ما فيه بطاقة تابي في السعودية» يظل صحيح.",
+    "ليش مو بطاقة طويق؟ حسب فهمي، وقابل للتصحيح: طويق محفظة تدفع من رصيدك أنت، والقواعد تحتاج بطاقة تمويل (ادفع لاحقاً) عشان يكون فيه شي ينقسم.",
     "الخط Readex Pro بديل عن خط تابي، لأن خطها مو مرخّص لهذا الاستخدام.",
   ],
+  modelHeading: "سؤال مفتوح: نموذج العمل",
+  modelText:
+    "المراجعات في هالموقع نفسه تقول إن التقسيم بالبطاقة في الإمارات، في المحلات غير الشريكة، صار يحتاج اشتراك تابي بلس. فما أعرف للحين: هل قواعدك مجانية ولا ضمن بلس؟ وكيف تكسب تابي من عملية في محل مو شريك؟ الاحتمالين، مجانية ضمن حد التقسيم على 4 أو ضمن الاشتراك، يُختبرون في البايلوت. ما عندي أرقام إيراد، وما بخترعها.",
 };
 
 export type Copy = typeof ar;
@@ -491,7 +514,7 @@ const en: Copy = {
   ideaWord: "Idea",
   heroIdea1: "Bring the Tabby Card to Saudi",
   heroIdea1Sub: "Request it in the Tabby app, and pay with it in any shop that takes Visa.",
-  heroIdea2: "Your payments split themselves, on rules you set",
+  heroIdea2: "Your eligible payments split themselves, on rules you set",
   heroIdea2Sub: "Say once what gets split, and after every payment you know its plan straight away.",
   heroPhoneCaption: "The Saudi Tabby app with the new Card tab. A simplified likeness, not the real app.",
 
@@ -521,7 +544,7 @@ const en: Copy = {
         { k: "Idea 1", v: "The Tabby Card in the Saudi Tabby app. Request it, add it to Apple Pay, pay in any shop." },
         {
           k: "Idea 2",
-          v: "Set a rule once, for example \"split anything from SAR 300 in 4\". After that every payment splits itself, and a notification tells you its plan straight away.",
+          v: "Set a rule once, for example \"split anything from SAR 300 in 4\". After that every payment splits itself if it's eligible, and a notification tells you its plan straight away.",
         },
         { k: "", v: "And a plan with a fee only happens if you say yes." },
       ],
@@ -669,14 +692,13 @@ const en: Copy = {
   srRefundedA: "Refunded. You got back",
   srRefundedB: ", and",
   srRefundedC: "payments were cancelled.",
-  srNotEligible: "This one can't be split. The payment went through, and it's on your statement.",
+  srNotEligible: "Your rule is a preference, not a guarantee. Tabby checks every purchase at the tap: its approval, and the merchant category. This one didn't qualify, so it can't be split. The payment went through, and it's on your statement.",
   srNotEligibleNext: "You can pay it in full before your statement closes.",
   srYouChoseStatement: "You left it on your statement.",
-  srSplitAnyway: "Split anyway",
+  srSplitAnyway: "Split it in 4",
   srLeave: "Leave it on my statement",
   srFeeSplitA: "Split over",
   srFeeSplitB: "months",
-  srFeeIn4: "Pay in 4 instead",
   srChangeTitle: "Pick a plan",
   srPlanIn4: "4 payments, no fees",
   srPlanStatement: "On your statement",
@@ -693,12 +715,27 @@ const en: Copy = {
     "In Saudi, longer plans run as Murabaha: a cost agreed upfront. Nobody is entered into one without saying yes.",
     "That's why Rule 3 is part of the product, not a limit on it.",
   ],
+  safetyHeading: "And protection for you",
+  safetyLines: [
+    "Rules start switched off, and you switch them on yourself. In the prototype they're on, so you can see what they do.",
+    "Pause them with one tap, and turn them back on whenever you like.",
+    "A monthly summary: how much split on its own, and how much you still owe. Like the phone's This month screen.",
+  ],
+
+  evalOrderHeading: "The order your rules run in, on every purchase",
+  evalOrder: [
+    "Eligible to split? Tabby's approval at the tap, and an allowed merchant category. No → on your statement, with a notification saying why.",
+    "From the Rule 1 threshold up? No → on your statement.",
+    "Would it take you past your cap? Yes → not split on its own, not even in part. A notification says it's over your cap, and you can split it yourself.",
+    "Does the plan on offer have a fee? Yes → it asks you first, always.",
+  ],
+  evalOrderEnd: "Passes all four → splits in 4 on its own.",
 
   simTitle: "Try it yourself: move the rules, and watch what happens to each purchase.",
   rulesHeading: "Your rules",
   rule1Label: "Rule 1 · What splits on its own",
-  rule1Before: "Over",
-  rule1After: "",
+  rule1Before: "Anything from",
+  rule1After: "up",
   rule1Result: "4 payments",
   rule2Label: "Rule 2 · Your monthly cap",
   rule2Before: "Never auto-split more than",
@@ -718,22 +755,27 @@ const en: Copy = {
   outcomeStatement: "On statement",
   outcomeOverCap: "Over your cap",
   outcomeAsks: "Asks you",
+  outcomeOverCapFee: "Over cap + fee · asks you",
   outcomeNotEligible: "Can't split",
 
   receiptHeading: "Your plan receipt",
   receiptLive: "Receipt updated",
   fourPaymentsOf: "4 payments of",
   today: "Today",
-  splitByRuleBefore: "Split by your rule: over",
-  splitByRuleAfter: "",
+  splitByRuleBefore: "Split by your rule: from",
+  splitByRuleAfter: "up",
   changeUntilBefore: "You can change it until your statement closes on",
   statementTitle: "On your statement",
   belowBefore: "This one is under your rule (",
   belowAfter: "), so it wasn't split. You can still split it yourself.",
   overCapBefore: "This one would take you past your",
   overCapAfter:
-    " cap, so it wasn't split automatically. It's on your statement. You can still split it yourself.",
+    " cap, so it wasn't split automatically, not even in part. It's on your statement. Split it yourself?",
   feeTitle: "This plan has a fee, so it asks you first.",
+  overCapFeeTitle: "Over your cap, and the plan on offer has a fee.",
+  overCapFeeOne: "Two reasons, one decision, yours.",
+  feeWhy:
+    "Why a fee? This purchase is over your available Pay in 4 limit, so the plan on offer is 6 months as Murabaha. That sits inside the announced consumer finance licence: purchases of SAR 2,000–50,000, up to 12 months.",
   feeMonthsBefore: "You can split this over",
   feeMonthsAfter: "months for a fee of",
   feeTotal: "Total",
@@ -746,10 +788,10 @@ const en: Copy = {
   capWouldBe: "would be",
 
   act1Kicker: "Idea 2 · Split Rules",
-  act1Statement: "Today: you pay with the card, then split by hand. With your rules: it splits itself.",
+  act1Statement: "Today: you pay with the card, then split by hand. With your rules: it splits itself, if it's eligible.",
   act1Setup: [
     "In the UAE today, after every card payment you have to open the app and split it yourself.",
-    "With your rules, you decide once what gets split. After that every payment splits itself, and a notification tells you its plan.",
+    "With your rules, you decide once what gets split. After that every payment splits itself if it's eligible, and a notification tells you its plan.",
   ],
 
   bpHeading: "Try it yourself",
@@ -801,7 +843,7 @@ const en: Copy = {
   bpPosAmount: "Amount",
   bpReceipt: "Receipt",
   bpBackToStore: "Back to the store",
-  bpOnlineAside: "You pay with the Tabby Card in Apple Pay like any card. After you pay, your rule splits the purchase by itself, and Tabby sends you a notification with its plan. Nothing else to do.",
+  bpOnlineAside: "You pay with the Tabby Card in Apple Pay like any card. After you pay, if the purchase is eligible, your rule splits it by itself, and Tabby sends you a notification with its plan. Nothing else to do.",
   bpOpenApp: "Later: open the app",
   bpActivity: "Card activity",
   bpOnStatement: "On your statement",
@@ -911,8 +953,12 @@ const en: Copy = {
     "Idea 1's steps come from the UAE Tabby Card page (26 Sep 2026); every Saudi-specific line is a proposal.",
     "The wallet sheet and the terminal are drawn with no Apple marks. They aren't real screens.",
     "Tabby owns Tweeq, a SAMA-licensed wallet that issues cards and runs as an independent entity. \"No Tabby Card in Saudi\" still holds.",
+    "Why not a Tweeq card? My understanding, open to correction: Tweeq is a wallet that pays from the customer's own balance, and the rules need a financing card (pay later) so there's something to split.",
     "Readex Pro stands in for Tabby's own typeface, which isn't licensed for this use.",
   ],
+  modelHeading: "Open question: the business model",
+  modelText:
+    "The reviews on this very page say that splitting with the card in the UAE, at non-partner shops, now needs a Tabby Plus subscription. So I don't know yet: are your rules free, or part of Plus? And how does Tabby earn on a purchase at a non-partner shop? Both options, free within the Pay in 4 limit or part of the subscription, get tested in the pilot. I have no revenue figures, and I won't invent any.",
 };
 
 export const copy: Record<Lang, Copy> = { ar, en };

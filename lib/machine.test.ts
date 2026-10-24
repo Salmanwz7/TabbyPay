@@ -5,6 +5,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
+  asksFirst,
   evaluatePurchase,
   payIn4,
   reducer,
@@ -48,8 +49,20 @@ test("default rules: furniture 1,400 would pass the cap (840 + 1,400 > 2,000)", 
   assert.equal(evaluatePurchase(furniture, DEFAULT_RULES, MONTH_TO_DATE), "OVER_CAP");
 });
 
-test("default rules: electronics 3,200 has a fee plan, so it asks", () => {
-  assert.equal(evaluatePurchase(electronics, DEFAULT_RULES, MONTH_TO_DATE), "FEE_PLAN_AVAILABLE");
+test("default rules: electronics 3,200 is over the cap AND its plan has a fee: one ask, both reasons", () => {
+  assert.equal(evaluatePurchase(electronics, DEFAULT_RULES, MONTH_TO_DATE), "OVER_CAP_FEE_PLAN");
+});
+
+test("electronics under a cap of 4,100 (840 + 3,200 = 4,040) still asks, for the fee alone", () => {
+  assert.equal(evaluatePurchase(electronics, { ...DEFAULT_RULES, cap: 4100 }, MONTH_TO_DATE), "FEE_PLAN_AVAILABLE");
+});
+
+test("order: the threshold is checked before the cap", () => {
+  assert.equal(evaluatePurchase(pharmacy, { threshold: 300, cap: 500 }, MONTH_TO_DATE), "BELOW_THRESHOLD");
+});
+
+test("order: eligibility is checked before everything", () => {
+  assert.equal(evaluatePurchase(salon, { threshold: 1000, cap: 500 }, MONTH_TO_DATE), "NOT_ELIGIBLE");
 });
 
 test("raising the cap to 2,300 flips furniture to split", () => {
@@ -87,11 +100,9 @@ test("a not-eligible purchase is never split, whatever the rules", () => {
 test("a fee plan is never auto-applied at any slider position", () => {
   for (let threshold = 50; threshold <= 1000; threshold += 50) {
     for (let cap = 500; cap <= 5000; cap += 100) {
-      assert.equal(
-        evaluatePurchase(electronics, { threshold, cap }, MONTH_TO_DATE),
-        "FEE_PLAN_AVAILABLE",
-        `threshold ${threshold}, cap ${cap}`,
-      );
+      const o = evaluatePurchase(electronics, { threshold, cap }, MONTH_TO_DATE);
+      assert.ok(asksFirst(o), `threshold ${threshold}, cap ${cap}: ${o}`);
+      assert.equal(o === "OVER_CAP_FEE_PLAN", MONTH_TO_DATE + electronics.amount > cap);
     }
   }
 });
@@ -181,9 +192,11 @@ test("a fee plan stops at ASK_CUSTOMER and creates nothing until the customer ch
   const total = e.schedule.reduce((a, i) => a + i.amount, 0);
   assert.equal(Math.round(total * 100) / 100, electronics.amount + electronics.feePlan!.fee);
 
-  const four = reducer(s, { type: "CHOOSE", choice: "pay_in_4" });
-  assert.equal(four.ledger[0].plan, "pay_in_4");
-  assert.equal(four.ledger[0].reason, "by_you");
+  // 3,200 is over the customer's Pay in 4 limit: the fee plan is the only split.
+  assert.equal(reducer(s, { type: "CHOOSE", choice: "pay_in_4" }), s);
+  assert.equal(accepted.ledger[0].outcome, "OVER_CAP_FEE_PLAN");
+  const moved = run(accepted, { type: "CHANGE_PLAN" });
+  assert.equal(reducer(moved, { type: "PICK_PLAN", plan: "pay_in_4" }), moved);
 
   const stmt = reducer(s, { type: "CHOOSE", choice: "statement" });
   assert.equal(stmt.ledger[0].plan, "statement");
@@ -243,12 +256,12 @@ test("events that do not apply in a phase leave the state unchanged", () => {
   assert.equal(reducer(s, { type: "CHOOSE", choice: "fee_plan" }), s);
 });
 
-test("the over-cap scenario reproduces Screen 5: 1,200 of 2,000 so far", () => {
+test("the over-cap scenario reproduces Screen 5 from the same 840 as everywhere else", () => {
   const s = reducer(initialState(), { type: "OPEN_SCENARIO", id: "over_cap" });
   assert.equal(s.phase.tag, "RECEIPT");
   assert.equal(s.ledger.at(-1)!.reason, "over_cap");
   assert.equal(s.ledger.at(-1)!.purchase.id, "furniture");
-  assert.equal(capUsed(s), 1200);
+  assert.equal(capUsed(s), MONTH_TO_DATE);
 });
 
 test("every preset purchase has a merchant name in both languages", () => {
