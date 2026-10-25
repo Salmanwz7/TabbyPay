@@ -246,7 +246,7 @@ const ar = {
   safetyLines: [
     "القواعد مطفأة من البداية، وأنت اللي تشغّلها. في النموذج مشغّلة، عشان تشوف وش تسوي.",
     "توقفها مؤقتاً بضغطة، وترجّعها متى ما تبي.",
-    "ملخص كل شهر: كم انقسم لحاله، وكم باقي عليك. مثل شاشة «هالشهر» في الجوال.",
+    "ملخص كل شهر: وش تقسّم بقاعدتك، ووش قسّمته أنت، ووش على كشفك، وكم دفعات اليوم. مثل شاشة «هالشهر» في الجوال.",
   ],
 
   evalOrderHeading: "ترتيب القواعد، على كل عملية",
@@ -719,7 +719,7 @@ const en: Copy = {
   safetyLines: [
     "Rules start switched off, and you switch them on yourself. In the prototype they're on, so you can see what they do.",
     "Pause them with one tap, and turn them back on whenever you like.",
-    "A monthly summary: how much split on its own, and how much you still owe. Like the phone's This month screen.",
+    "A monthly summary: what split by your rule, what you split, what's on your statement, and what's due today. Like the phone's This month screen.",
   ],
 
   evalOrderHeading: "The order your rules run in, on every purchase",
